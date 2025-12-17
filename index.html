@@ -19,13 +19,19 @@
             --color-accent: #FF5E6C;   /* Rosa Guayaba */
             --color-secondary: #FFD700; /* Amarillo Sol */
             --color-outline: rgba(255, 94, 108, 0.7); /* Contraste para Outline */
+
+            /* Ajustes del fondo: regula textura y velos rojizos aquí */
+            --texture-offset-y: 15%;
+            --texture-opacity: 0.48; /* Cambia este valor para más/menos textura visible */
+            --overlay-strong: rgba(58, 10, 10, 0.55); /* Modifica color/alpha para el velo rojizo principal */
+            --overlay-soft: rgba(24, 3, 3, 0.42);     /* Modifica color/alpha para el velo más suave */
+            --overlay-sheen: rgba(255, 94, 108, 0.04); /* Ajusta el brillo rosado sutil */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--color-bg);
-            background: radial-gradient(circle at 50% 50%, #3a0a0a 0%, #180303 100%);
             color: var(--color-text);
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
@@ -40,11 +46,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('assets/images/assets/texture.png');
+            background-image: url('Assets/images/texture.png');
             background-size: cover;
-            background-position: center;
+            background-position: center var(--texture-offset-y);
             background-repeat: no-repeat;
-            opacity: 0.25;
+            opacity: var(--texture-opacity);
             z-index: -3;
             pointer-events: none;
         }
@@ -56,7 +62,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, rgba(255, 94, 108, 0.08), transparent);
+            background:
+                radial-gradient(circle at 50% 50%, var(--overlay-strong) 0%, var(--overlay-soft) 100%),
+                linear-gradient(45deg, var(--overlay-sheen), transparent);
             z-index: -2;
             pointer-events: none;
         }
@@ -170,10 +178,10 @@
 
         /* --- MARQUEE (CARRUSEL) --- */
         .marquee-container {
-            background: var(--color-secondary); 
-            color: var(--color-bg); 
-            padding: 15px 0; 
-            overflow: hidden; 
+            background: var(--color-secondary);
+            color: var(--color-bg);
+            padding: 15px 0;
+            overflow: hidden;
             position: relative;
             width: 105%; 
             margin-left: -2.5%; 
@@ -185,15 +193,23 @@
         }
         .marquee-track {
             display: flex;
+            width: max-content;
             white-space: nowrap;
-            animation: scroll 20s linear infinite;
+            animation: marquee 16s linear infinite;
         }
+        .marquee-group { display: flex; }
         .marquee-item {
-            font-family: 'Abril Fatface', cursive; 
-            font-size: 1.5rem; 
+            font-family: 'Abril Fatface', cursive;
+            font-size: 1.5rem;
             text-transform: uppercase;
             padding: 0 2rem;
             line-height: 1; /* Para centrar verticalmente */
+            flex-shrink: 0;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         /* SPOTIFY SECTION - Se mantiene */
@@ -370,10 +386,18 @@
 
     <div class="marquee-container">
         <div class="marquee-track">
-            <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
-            <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
-            <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
-            <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+            <div class="marquee-group">
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+            </div>
+            <div class="marquee-group" aria-hidden="true">
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+            </div>
         </div>
     </div>
 
