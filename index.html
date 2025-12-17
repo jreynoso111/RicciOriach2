@@ -14,13 +14,12 @@
     <style>
         /* --- VARIABLES & ESTILOS GLOBALES --- */
         :root {
-            --color-bg: #300505;       /* Rojo Vino Profundo */
-            --color-text: #F4F4F4;     /* Blanco Hueso */
-            --color-accent: #FF5E6C;   /* Rosa Guayaba */
-            --color-secondary: #FFD700; /* Amarillo Sol */
-            --color-outline: rgba(255, 94, 108, 0.7); /* Contraste para Outline */
+            --color-bg: #300505;
+            --color-text: #F4F4F4;
+            --color-accent: #FF5E6C;
+            --color-secondary: #FFD700;
+            --color-outline: rgba(255, 94, 108, 0.7);
 
-            /* Ajustes del fondo */
             --texture-offset-y: 15%;
             --texture-opacity: 0.48;
             --overlay-strong: rgba(58, 10, 10, 0.55);
@@ -89,8 +88,8 @@
             min-height: 90vh;
             display: flex;
             align-items: center;
-            justify-content: center; /* Centrado */
-            gap: 5rem; /* Espacio controlado entre elementos */
+            justify-content: center;
+            gap: 5rem;
             padding: 0 5%;
             padding-top: 80px;
             position: relative;
@@ -150,58 +149,62 @@
         .marquee-item { font-family: 'Abril Fatface', cursive; font-size: 1.5rem; text-transform: uppercase; padding: 0 2rem; line-height: 1; flex-shrink: 0; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- SECCIÓN MULTIMEDIA (Spotify + YouTube) --- */
-        #listen {
-            padding: 4rem 5%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        /* --- SECCIÓN MULTIMEDIA --- */
+        #listen { padding: 4rem 5%; text-align: center; }
 
         .section-title {
-            font-family: 'Abril Fatface', cursive; font-size: 3rem; margin-bottom: 3rem;
+            font-family: 'Abril Fatface', cursive; font-size: 3rem; margin-bottom: 1rem;
             color: var(--color-text); text-align: center;
             text-shadow: 0 0 15px rgba(255, 94, 108, 0.3);
         }
 
-        /* GRID: Divide en 2 columnas */
-        .media-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        /* ✅ Wrapper: lado a lado, alineados arriba */
+        .multimedia-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* clave para que queden parejos */
             gap: 2rem;
-            width: 100%;
-            max-width: 1100px;
-            align-items: start;
+            flex-wrap: wrap;
+            margin-top: 2rem;
         }
 
-        /* Estilos para contenedores de medios */
-        .media-wrapper {
-            /* Opcional: si quieres fondo o sombra común */
+        /* ✅ Tarjeta uniforme para ambos */
+        .media-card {
+            width: 25vw;
+            min-width: 280px;
+            max-width: 420px;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .spotify-embed { 
-            width: 100%; 
-            height: 352px; 
-            border: none; 
-            /* Importante: para que no tenga bordes raros */
-            display: block; 
-        }
-
-        .youtube-container {
-            position: relative;
+        /* Spotify: altura fija (igual que el embed) */
+        .spotify-card iframe {
             width: 100%;
-            height: 0;
-            padding-bottom: 56.25%; /* 16:9 ratio */
-            background: #000;
-        }
-        .youtube-container iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+            height: 352px;
+            border: none;
+            display: block;
         }
 
-        .spotify-fallback { text-align: center; margin-top: 1rem; font-size: 0.9rem; opacity: 0.8; grid-column: 1 / -1; }
+        /* YouTube: 16:9 */
+        .youtube-card {
+            aspect-ratio: 16/9;
+        }
+        .youtube-card iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .spotify-fallback {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            width: 100%;
+        }
+
         .spotify-fallback a { color: var(--color-secondary); font-weight: 700; }
 
         /* --- TOUR SECTION --- */
@@ -252,8 +255,6 @@
              .hero-content { max-width: 100%; }
              .hero-image-container { max-width: 80%; }
              .hero-title { font-size: 3.5rem; }
-             /* En tablet/móvil, la media-grid pasa a 1 columna */
-             .media-grid { grid-template-columns: 1fr; max-width: 500px; gap: 3rem; }
         }
 
         @media (max-width: 768px) {
@@ -269,6 +270,9 @@
 
             .hero-subtitle { font-size: 1rem; }
             .marquee-item { font-size: 1.2rem; padding: 0 1rem; }
+
+            .multimedia-wrapper { flex-direction: column; gap: 2rem; }
+            .media-card { width: 80vw; max-width: 520px; min-width: 0; }
 
             .tour-section { margin: 3rem 1rem; padding: 2rem 1rem; }
             .tour-item { flex-direction: column; gap: 15px; text-align: center; padding: 1.5rem 0; }
@@ -292,7 +296,7 @@
             <li><a href="blog.html">BLOG</a></li>
             <li><a href="contact.html">CONTACTO</a></li>
         </ul>
-        <div class="hamburger">
+        <div class="hamburger" aria-label="Abrir menú" role="button" tabindex="0">
             <span></span><span></span><span></span>
         </div>
     </nav>
@@ -329,23 +333,34 @@
 
     <section id="listen">
         <h2 class="section-title">MÚSICA & VIDEO</h2>
-        
-        <div class="media-grid">
-            
-            <div class="media-wrapper spotify-wrapper">
-                <iframe class="spotify-embed" style="border-radius:12px" src="https://open.spotify.com/embed/artist/5gCjZ3nZ4z1p5A1B8r9Z8A?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+        <div class="multimedia-wrapper">
+            <!-- ✅ SPOTIFY (exactamente el que pegaste, dentro de una tarjeta) -->
+            <div class="media-card spotify-card">
+                <iframe
+                    src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                    title="Riccie Oriach en Spotify"
+                ></iframe>
             </div>
 
-            <div class="media-wrapper">
-                <div class="youtube-container">
-                    <iframe src="https://www.youtube.com/embed/6Zn7H97v1HM" title="Riccie Oriach - La Guayaba (Official Video)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
+            <!-- ✅ YOUTUBE al lado -->
+            <div class="media-card youtube-card">
+                <iframe
+                    src="https://www.youtube.com/embed/6Zn7H97v1HM"
+                    title="Riccie Oriach - La Guayaba (Official Video)"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                ></iframe>
             </div>
-
         </div>
 
         <p class="spotify-fallback">
-            ¿No carga el reproductor? <a href="https://open.spotify.com/artist/5gCjZ3nZ4z1p5A1B8r9Z8A" target="_blank">Abrir perfil en Spotify</a>
+            ¿No carga el reproductor?
+            <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">
+                Abrir perfil en Spotify
+            </a>
         </p>
     </section>
 
@@ -383,23 +398,101 @@
         <div class="footer-content">
             <div class="logo" style="margin-bottom: 1.5rem;"><a href="index.html">RICCIE ORIACH</a></div>
             <div class="social-links">
-                <a href="#">Instagram</a>
-                <a href="#">Spotify</a>
-                <a href="#">YouTube</a>
+                <a href="#" rel="noopener">Instagram</a>
+                <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
+                <a href="#" rel="noopener">YouTube</a>
             </div>
             <p>© 2025 Riccie Oriach. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <script src="Assets/js/particles.js"></script>
     <script>
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+        let speedMultiplier = 1;
+        let scrollTimeout;
+
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        class Particle {
+            constructor() {
+                const hues = [90, 110, 135, 155, 180];
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 0.5;
+                const depthSpeed = this.size * 0.15;
+                this.speedX = (Math.random() * 2 - 1) * depthSpeed;
+                this.speedY = (Math.random() * 2 - 1) * depthSpeed;
+                const hue = hues[Math.floor(Math.random() * hues.length)];
+                const lightness = 45 + Math.random() * 35;
+                const alpha = 0.18 + Math.random() * 0.32;
+                this.color = `hsla(${hue}, 70%, ${lightness}%, ${alpha})`;
+            }
+            update() {
+                this.x += this.speedX * speedMultiplier;
+                this.y += this.speedY * speedMultiplier;
+                if (this.x > canvas.width) this.x = 0; else if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0; else if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+        }
+
+        initParticles();
+        animateParticles();
+
+        const resetMultiplier = () => { speedMultiplier = 1; };
+
+        window.addEventListener('wheel', () => {
+            speedMultiplier = 3;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(resetMultiplier, 250);
+        });
+
         // --- SCRIPT DE NAVEGACIÓN ---
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
 
-        hamburger.addEventListener('click', () => {
+        const toggleMenu = () => {
             navLinks.classList.toggle('active');
             hamburger.style.transform = navLinks.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0)';
+        };
+
+        hamburger.addEventListener('click', toggleMenu);
+        hamburger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleMenu();
+            }
         });
 
         document.querySelectorAll('.nav-links li a').forEach(link => {
@@ -417,9 +510,7 @@
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
                 const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
+                if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
             });
         });
     </script>
