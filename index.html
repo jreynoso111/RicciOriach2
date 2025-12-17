@@ -39,7 +39,7 @@
             position: relative;
         }
 
-        /* Capas de Fondo (Textura y Color) */
+        /* Capas de Fondo */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('Assets/images/texture.png'); background-size: cover;
@@ -60,7 +60,6 @@
         .navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 1.5rem 2rem; position: absolute; top: 0; left: 0; width: 100%; z-index: 100;
-            /* Un toque sutil de fondo para que no se pierda sobre la textura */
             background: linear-gradient(to bottom, rgba(48, 5, 5, 0.8), transparent);
         }
 
@@ -75,7 +74,6 @@
             text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s ease;
             position: relative;
         }
-        /* Efecto hover sutil en los links */
         .nav-links li a::after {
             content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
             background-color: var(--color-accent); transition: width 0.3s;
@@ -86,14 +84,13 @@
         .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
         .hamburger span { width: 25px; height: 3px; background-color: white; transition: transform 0.3s; }
 
-        /* --- HERO SECTION (Corregido) --- */
+        /* --- HERO SECTION --- */
         .hero {
             min-height: 90vh;
             display: flex;
             align-items: center;
-            /* CORRECCIÓN CLAVE: Centrar y usar gap en lugar de space-between */
-            justify-content: center;
-            gap: 5rem; /* Controla la distancia entre texto e imagen */
+            justify-content: center; /* Centrado */
+            gap: 5rem; /* Espacio controlado entre elementos */
             padding: 0 5%;
             padding-top: 80px;
             position: relative;
@@ -125,12 +122,11 @@
             box-shadow: 0 10px 25px rgba(255, 94, 108, 0.6); background-color: #ff7a85;
         }
 
-        /* Imagen Héroe Mejorada */
+        /* Imagen Héroe */
         .hero-image-container { position: relative; max-width: 500px; display: flex; justify-content: center; }
         .hero-image {
-            width: 100%; border-radius: 30px; /* Bordes más redondeados */
+            width: 100%; border-radius: 30px;
             filter: contrast(1.1) saturate(1.1);
-            /* Sombra más suave y brillante en lugar de dura */
             box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(255, 215, 0, 0.2);
             transition: transform 0.5s ease;
         }
@@ -154,7 +150,7 @@
         .marquee-item { font-family: 'Abril Fatface', cursive; font-size: 1.5rem; text-transform: uppercase; padding: 0 2rem; line-height: 1; flex-shrink: 0; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- NUEVA SECCIÓN MULTIMEDIA (Spotify + YouTube) --- */
+        /* --- SECCIÓN MULTIMEDIA (Spotify + YouTube) --- */
         #listen {
             padding: 4rem 5%;
             display: flex;
@@ -168,43 +164,44 @@
             text-shadow: 0 0 15px rgba(255, 94, 108, 0.3);
         }
 
-        /* Grid Container para los dos elementos */
+        /* GRID: Divide en 2 columnas */
         .media-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Dos columnas iguales en desktop */
+            grid-template-columns: 1fr 1fr;
             gap: 2rem;
             width: 100%;
-            max-width: 1000px; /* Ancho máximo para que no se estiren demasiado */
-            margin: 0 auto;
+            max-width: 1100px;
+            align-items: start;
         }
 
-        /* Estilos comunes para los contenedores de los embeds */
+        /* Estilos para contenedores de medios */
         .media-wrapper {
-            border-radius: 16px;
+            /* Opcional: si quieres fondo o sombra común */
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 94, 108, 0.1); /* Resplandor suave */
-            background: rgba(0,0,0,0.2); /* Fondo oscuro sutil detrás */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .media-wrapper:hover {
-             transform: translateY(-5px);
-             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 94, 108, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .spotify-embed { width: 100%; height: 352px; border: none; }
+        .spotify-embed { 
+            width: 100%; 
+            height: 352px; 
+            border: none; 
+            /* Importante: para que no tenga bordes raros */
+            display: block; 
+        }
 
-        /* Contenedor responsivo para YouTube (mantiene aspecto 16:9) */
         .youtube-container {
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 56.25%; /* Aspect Ratio 16:9 */
+            padding-bottom: 56.25%; /* 16:9 ratio */
+            background: #000;
         }
         .youtube-container iframe {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
         }
 
-        .spotify-fallback { text-align: center; margin-top: 1rem; font-size: 0.9rem; opacity: 0.8; }
+        .spotify-fallback { text-align: center; margin-top: 1rem; font-size: 0.9rem; opacity: 0.8; grid-column: 1 / -1; }
         .spotify-fallback a { color: var(--color-secondary); font-weight: 700; }
 
         /* --- TOUR SECTION --- */
@@ -217,7 +214,6 @@
         }
 
         .tour-dates { max-width: 900px; margin: 0 auto; }
-
         .tour-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 1.8rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -256,7 +252,8 @@
              .hero-content { max-width: 100%; }
              .hero-image-container { max-width: 80%; }
              .hero-title { font-size: 3.5rem; }
-             .media-grid { grid-template-columns: 1fr; max-width: 500px; gap: 3rem; } /* Grid a 1 columna en tablet/movil */
+             /* En tablet/móvil, la media-grid pasa a 1 columna */
+             .media-grid { grid-template-columns: 1fr; max-width: 500px; gap: 3rem; }
         }
 
         @media (max-width: 768px) {
@@ -332,19 +329,23 @@
 
     <section id="listen">
         <h2 class="section-title">MÚSICA & VIDEO</h2>
+        
         <div class="media-grid">
+            
             <div class="media-wrapper spotify-wrapper">
-                <iframe class="spotify-embed" style="border-radius:12px" src="https://open.spotify.com/embed/artist/5a2w2J1j7W3W3X4Y5Z6a8b?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe class="spotify-embed" style="border-radius:12px" src="https://open.spotify.com/embed/artist/5gCjZ3nZ4z1p5A1B8r9Z8A?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
 
-            <div class="media-wrapper youtube-wrapper">
+            <div class="media-wrapper">
                 <div class="youtube-container">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=REPLACE_WITH_REAL_ID" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/6Zn7H97v1HM" title="Riccie Oriach - La Guayaba (Official Video)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
             </div>
+
         </div>
+
         <p class="spotify-fallback">
-            ¿No carga el reproductor? <a href="https://open.spotify.com/artist/5a2w2J1j7W3W3X4Y5Z6a8b" target="_blank">Abrir perfil en Spotify</a>
+            ¿No carga el reproductor? <a href="https://open.spotify.com/artist/5gCjZ3nZ4z1p5A1B8r9Z8A" target="_blank">Abrir perfil en Spotify</a>
         </p>
     </section>
 
@@ -398,11 +399,9 @@
 
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            // Animación simple para el icono de hamburguesa
             hamburger.style.transform = navLinks.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0)';
         });
 
-        // Cerrar menú al hacer click en un enlace (móvil)
         document.querySelectorAll('.nav-links li a').forEach(link => {
             link.addEventListener('click', () => {
                 if (navLinks.classList.contains('active')) {
@@ -412,7 +411,6 @@
             });
         });
 
-        // Scroll suave mejorado
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
