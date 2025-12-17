@@ -12,12 +12,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
 
     <style>
+        /* --- VARIABLES & ESTILOS GLOBALES --- */
         :root {
-            --color-bg: #300505;
-            --color-text: #F4F4F4;
-            --color-accent: #FF5E6C;
-            --color-secondary: #FFD700;
-            --color-outline: rgba(255, 94, 108, 0.7);
+            --color-bg: #300505;       /* Rojo Vino Profundo */
+            --color-text: #F4F4F4;     /* Blanco Hueso */
+            --color-accent: #FF5E6C;   /* Rosa Guayaba */
+            --color-secondary: #FFD700; /* Amarillo Sol */
+            --color-outline: rgba(255, 94, 108, 0.7); /* Contraste para Outline */
+
+            /* Ajustes del fondo */
+            --texture-offset-y: 15%;
+            --texture-opacity: 0.48;
+            --overlay-strong: rgba(58, 10, 10, 0.55);
+            --overlay-soft: rgba(24, 3, 3, 0.42);
+            --overlay-sheen: rgba(255, 94, 108, 0.04);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,72 +35,144 @@
             color: var(--color-text);
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
+            margin: 0;
+            position: relative;
         }
 
-        /* --- NAV --- */
+        /* Capas de Fondo */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('Assets/images/texture.png'); background-size: cover;
+            background-position: center var(--texture-offset-y); background-repeat: no-repeat;
+            opacity: var(--texture-opacity); z-index: -3; pointer-events: none;
+        }
+
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, var(--overlay-strong) 0%, var(--overlay-soft) 100%),
+                        linear-gradient(45deg, var(--overlay-sheen), transparent);
+            z-index: -2; pointer-events: none;
+        }
+
+        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+        /* --- NAVBAR --- */
         .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
-            position: absolute;
-            width: 100%;
-            z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 2rem; position: absolute; top: 0; left: 0; width: 100%; z-index: 100;
             background: linear-gradient(to bottom, rgba(48, 5, 5, 0.8), transparent);
         }
 
         .logo a {
-            font-family: 'Abril Fatface', cursive;
-            font-size: 1.5rem;
-            color: var(--color-secondary);
-            text-decoration: none;
+            font-family: 'Abril Fatface', cursive; font-size: 1.5rem; color: var(--color-secondary);
+            letter-spacing: 1px; text-decoration: none; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        /* --- HERO --- */
+        .nav-links { list-style: none; display: flex; gap: 2rem; }
+        .nav-links li a {
+            text-decoration: none; color: var(--color-text); font-weight: 500;
+            text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-links li a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background-color: var(--color-accent); transition: width 0.3s;
+        }
+        .nav-links li a:hover::after { width: 100%; }
+        .nav-links li a:hover { color: var(--color-accent); text-shadow: 0 0 5px var(--color-accent); }
+
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .hamburger span { width: 25px; height: 3px; background-color: white; transition: transform 0.3s; }
+
+        /* --- HERO SECTION --- */
         .hero {
             min-height: 90vh;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: center; /* Centrado */
             gap: 5rem;
-            padding: 120px 5% 0;
+            padding: 0 5%;
+            padding-top: 80px;
+            position: relative;
         }
+
+        .hero-content { max-width: 600px; z-index: 2; }
 
         .hero-title {
-            font-family: 'Abril Fatface', cursive;
-            font-size: 5rem;
-            line-height: 0.9;
+            font-family: 'Abril Fatface', cursive; font-size: 5rem; line-height: 0.9;
+            margin-bottom: 1rem; text-transform: uppercase;
         }
 
-        .outline-text {
-            -webkit-text-stroke: 2px var(--color-outline);
-            color: transparent;
+        .outline-text { -webkit-text-stroke: 2px var(--color-outline); text-stroke: 2px var(--color-outline); color: transparent; }
+        .filled-text { color: var(--color-accent); text-shadow: 0 0 20px rgba(255, 94, 108, 0.3); }
+
+        .hero-subtitle {
+            font-size: 1.3rem; letter-spacing: 4px; margin-bottom: 2.5rem;
+            color: var(--color-secondary); font-weight: 300;
         }
 
-        .filled-text {
-            color: var(--color-accent);
+        .cta-button {
+            display: inline-block; padding: 1rem 3rem; background-color: var(--color-accent);
+            color: white; text-decoration: none; border-radius: 50px; font-weight: 700;
+            font-size: 1.1rem; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 94, 108, 0.3);
+        }
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 94, 108, 0.6); background-color: #ff7a85;
         }
 
-        /* --- MULTIMEDIA --- */
+        /* Imagen Héroe */
+        .hero-image-container { position: relative; max-width: 500px; display: flex; justify-content: center; }
+        .hero-image {
+            width: 100%; border-radius: 30px;
+            filter: contrast(1.1) saturate(1.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(255, 215, 0, 0.2);
+            transition: transform 0.5s ease;
+        }
+        .hero-image-container:hover .hero-image { transform: scale(1.02) rotate(1deg); }
+
+        .floating-element { position: absolute; border-radius: 50%; opacity: 0.8; animation: float 6s ease-in-out infinite; z-index: -1; }
+        .fruit-1 { width: 80px; height: 80px; background: radial-gradient(circle, var(--color-accent), transparent); top: -30px; right: 30px; filter: blur(8px); }
+        .fruit-2 { width: 120px; height: 120px; background: radial-gradient(circle, var(--color-secondary), transparent); bottom: 30px; left: -50px; animation-delay: 2s; filter: blur(10px); }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+
+        /* --- MARQUEE --- */
+        .marquee-container {
+            background: var(--color-secondary); color: var(--color-bg); padding: 15px 0;
+            overflow: hidden; position: relative; width: 105%; margin-left: -2.5%;
+            margin-bottom: 4rem; transform: rotate(-1deg);
+            border-top: 3px solid var(--color-bg); border-bottom: 3px solid var(--color-bg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); display: flex;
+        }
+        .marquee-track { display: flex; width: max-content; white-space: nowrap; animation: marquee 20s linear infinite; }
+        .marquee-group { display: flex; }
+        .marquee-item { font-family: 'Abril Fatface', cursive; font-size: 1.5rem; text-transform: uppercase; padding: 0 2rem; line-height: 1; flex-shrink: 0; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- SECCIÓN MULTIMEDIA --- */
         #listen {
             padding: 4rem 5%;
             text-align: center;
         }
 
         .section-title {
-            font-family: 'Abril Fatface', cursive;
-            font-size: 3rem;
-            margin-bottom: 2rem;
+            font-family: 'Abril Fatface', cursive; font-size: 3rem; margin-bottom: 1rem;
+            color: var(--color-text); text-align: center;
+            text-shadow: 0 0 15px rgba(255, 94, 108, 0.3);
         }
 
+        /* Contenedor flexible para poner Spotify y Youtube lado a lado */
         .multimedia-wrapper {
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: flex-start; /* ✅ para alinear arriba */
             gap: 2rem;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Para movil */
+            margin-top: 2rem;
         }
 
+        /* ✅ NUEVO: tarjetas uniformes para que ambos “sincronicen” */
         .media-card {
             width: 25vw;
             min-width: 280px;
@@ -102,7 +182,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        /* Spotify */
+        /* ✅ Spotify dentro de tarjeta */
         .spotify-card iframe {
             width: 100%;
             height: 352px;
@@ -110,18 +190,20 @@
             display: block;
         }
 
-        /* YouTube – sincronizado con Spotify */
+        /* ✅ YouTube MÁS GRANDE: misma altura que Spotify */
         .youtube-card iframe {
             width: 100%;
-            height: 352px;
+            height: 352px; /* 👈 sincronizado con Spotify */
             border: none;
             display: block;
         }
 
         .spotify-fallback {
+            text-align: center;
             margin-top: 1rem;
             font-size: 0.9rem;
             opacity: 0.8;
+            width: 100%;
         }
 
         .spotify-fallback a {
@@ -129,65 +211,315 @@
             font-weight: 700;
         }
 
+        /* --- TOUR SECTION --- */
+        .tour-section {
+            padding: 4rem 2rem; background: rgba(48, 5, 5, 0.5);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            text-align: center; margin: 4rem 5%; border-radius: 30px;
+            border: 1px solid rgba(255, 94, 108, 0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .tour-dates { max-width: 900px; margin: 0 auto; }
+        .tour-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.8rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .tour-item:hover { background: rgba(255, 255, 255, 0.08); padding-left: 1.5rem; }
+        .tour-item:last-child { border-bottom: none; }
+
+        .date { color: var(--color-secondary); font-weight: 700; font-size: 1.6rem; width: 18%; text-align: left; font-family: 'Abril Fatface', cursive; }
+        .city { font-weight: 700; font-size: 1.3rem; width: 28%; text-align: left; }
+        .venue { font-weight: 300; width: 30%; text-align: left; opacity: 0.8; font-size: 1.1rem;}
+
+        .ticket-btn {
+            padding: 0.8rem 2rem; border: 2px solid var(--color-accent); color: var(--color-accent);
+            text-decoration: none; border-radius: 30px; font-size: 0.9rem; font-weight: 700;
+            transition: all 0.3s; letter-spacing: 1px;
+        }
+        .ticket-btn:hover { background: var(--color-accent); color: white; box-shadow: 0 0 20px rgba(255, 94, 108, 0.5); }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center; padding: 4rem 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto; background: linear-gradient(to top, rgba(20, 3, 3, 0.8), transparent);
+        }
+        .social-links { margin-bottom: 2rem; }
+        .social-links a {
+            color: var(--color-text); margin: 0 20px; text-decoration: none; font-weight: 700;
+            text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s; letter-spacing: 1px;
+        }
+        .social-links a:hover { color: var(--color-secondary); text-shadow: 0 0 10px var(--color-secondary); }
+        footer p { opacity: 0.6; font-size: 0.9rem; }
+
         /* --- RESPONSIVE --- */
+        @media (max-width: 968px) {
+             .hero { flex-direction: column-reverse; text-align: center; padding-top: 120px; gap: 3rem; }
+             .hero-content { max-width: 100%; }
+             .hero-image-container { max-width: 80%; }
+             .hero-title { font-size: 3.5rem; }
+        }
+
         @media (max-width: 768px) {
-            .multimedia-wrapper {
-                flex-direction: column;
+            .navbar { padding: 1rem; }
+            .nav-links {
+                display: none; flex-direction: column; position: absolute; top: 70px; right: 20px;
+                background-color: rgba(48, 5, 5, 0.95); padding: 2rem; border: 1px solid var(--color-accent);
+                border-radius: 15px; z-index: 1000; backdrop-filter: blur(10px);
+                opacity: 0; transform: translateY(-20px); transition: all 0.3s ease;
             }
-            .media-card {
-                width: 80vw;
-            }
+            .nav-links.active { display: flex; opacity: 1; transform: translateY(0); }
+            .hamburger { display: flex; }
+
+            .hero-subtitle { font-size: 1rem; }
+            .marquee-item { font-size: 1.2rem; padding: 0 1rem; }
+
+            .multimedia-wrapper { flex-direction: column; gap: 2rem; }
+            .media-card { width: 80vw; max-width: 520px; min-width: 0; } /* ✅ */
+            .tour-section { margin: 3rem 1rem; padding: 2rem 1rem; }
+            .tour-item { flex-direction: column; gap: 15px; text-align: center; padding: 1.5rem 0; }
+            .tour-item:hover { padding-left: 0; background: transparent; }
+            .date, .city, .venue { width: 100%; text-align: center; }
+            .date { font-size: 2rem; margin-bottom: 0.5rem; }
+            .ticket-btn { width: 100%; max-width: 200px; margin-top: 1rem;}
         }
     </style>
 </head>
 
 <body>
+    <canvas id="canvas-bg"></canvas>
 
     <nav class="navbar">
-        <div class="logo"><a href="#">RICCIE ORIACH</a></div>
+        <div class="logo"><a href="index.html">RICCIE ORIACH</a></div>
+        <ul class="nav-links">
+            <li><a href="index.html" style="color: var(--color-accent);">INICIO</a></li>
+            <li><a href="music.html">MÚSICA</a></li>
+            <li><a href="events.html">TICKETS</a></li>
+            <li><a href="blog.html">BLOG</a></li>
+            <li><a href="contact.html">CONTACTO</a></li>
+        </ul>
+        <div class="hamburger" aria-label="Abrir menú" role="button" tabindex="0">
+            <span></span><span></span><span></span>
+        </div>
     </nav>
 
     <header class="hero">
-        <h1 class="hero-title">
-            <span class="outline-text">RICCIE</span><br>
-            <span class="filled-text">ORIACH</span>
-        </h1>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="outline-text">RICCIE</span><br>
+                <span class="filled-text">ORIACH</span>
+            </h1>
+            <p class="hero-subtitle">FOLCLORE FUTURISTA</p>
+            <a href="#listen" class="cta-button">ESCUCHAR AHORA</a>
+        </div>
+
+        <div class="hero-image-container">
+            <img src="https://e.snmc.io/i/1200/s/4f296b59611b91c0ba6b29605cc567ac/6878615" alt="Riccie Oriach" class="hero-image">
+            <div class="floating-element fruit-1"></div>
+            <div class="floating-element fruit-2"></div>
+        </div>
     </header>
+
+    <div class="marquee-container">
+        <div class="marquee-track">
+            <div class="marquee-group">
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+            </div>
+            <div class="marquee-group" aria-hidden="true">
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+                <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
+            </div>
+        </div>
+    </div>
 
     <section id="listen">
         <h2 class="section-title">MÚSICA & VIDEO</h2>
 
         <div class="multimedia-wrapper">
-
-            <!-- SPOTIFY (embed que sí funcionaba) -->
+            <!-- ✅ Spotify (el que dices que funcionaba) -->
             <div class="media-card spotify-card">
                 <iframe
                     src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0"
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     loading="lazy"
-                    title="Riccie Oriach en Spotify">
-                </iframe>
+                    title="Riccie Oriach en Spotify"
+                ></iframe>
             </div>
 
-            <!-- YOUTUBE sincronizado -->
+            <!-- ✅ YouTube más grande: misma altura (352px) -->
             <div class="media-card youtube-card">
                 <iframe
                     src="https://www.youtube.com/embed/6Zn7H97v1HM"
                     title="Riccie Oriach - La Guayaba (Official Video)"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                ></iframe>
             </div>
-
         </div>
 
         <p class="spotify-fallback">
             ¿No carga el reproductor?
-            <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank">
+            <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">
                 Abrir perfil en Spotify
             </a>
         </p>
     </section>
 
+    <section id="tour" class="tour-section">
+        <h2 class="section-title" style="margin-bottom: 2rem;">TOUR 2025</h2>
+        <div class="tour-dates">
+            <div class="tour-item">
+                <span class="date">15 MAR</span>
+                <span class="city">SANTO DOMINGO</span>
+                <span class="venue">Teatro Nacional</span>
+                <a href="#" class="ticket-btn">TICKETS</a>
+            </div>
+            <div class="tour-item">
+                <span class="date">22 MAR</span>
+                <span class="city">SANTIAGO</span>
+                <span class="venue">Gran Teatro</span>
+                <a href="#" class="ticket-btn">TICKETS</a>
+            </div>
+            <div class="tour-item">
+                <span class="date">05 ABR</span>
+                <span class="city">BOGOTÁ</span>
+                <span class="venue">Estéreo Picnic</span>
+                <a href="#" class="ticket-btn">TICKETS</a>
+            </div>
+            <div class="tour-item">
+                <span class="date">12 MAY</span>
+                <span class="city">MADRID</span>
+                <span class="venue">Sala La Riviera</span>
+                <a href="#" class="ticket-btn">TICKETS</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo" style="margin-bottom: 1.5rem;"><a href="index.html">RICCIE ORIACH</a></div>
+            <div class="social-links">
+                <a href="#" rel="noopener">Instagram</a>
+                <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
+                <a href="#" rel="noopener">YouTube</a>
+            </div>
+            <p>© 2025 Riccie Oriach. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+        let speedMultiplier = 1;
+        let scrollTimeout;
+
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        class Particle {
+            constructor() {
+                const hues = [90, 110, 135, 155, 180];
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 0.5;
+                const depthSpeed = this.size * 0.15;
+                this.speedX = (Math.random() * 2 - 1) * depthSpeed;
+                this.speedY = (Math.random() * 2 - 1) * depthSpeed;
+                const hue = hues[Math.floor(Math.random() * hues.length)];
+                const lightness = 45 + Math.random() * 35;
+                const alpha = 0.18 + Math.random() * 0.32;
+                this.color = `hsla(${hue}, 70%, ${lightness}%, ${alpha})`;
+            }
+            update() {
+                this.x += this.speedX * speedMultiplier;
+                this.y += this.speedY * speedMultiplier;
+                if (this.x > canvas.width) this.x = 0; else if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0; else if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+        }
+
+        initParticles();
+        animateParticles();
+
+        const resetMultiplier = () => {
+            speedMultiplier = 1;
+        };
+
+        window.addEventListener('wheel', () => {
+            speedMultiplier = 3;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(resetMultiplier, 250);
+        });
+
+        // --- SCRIPT DE NAVEGACIÓN ---
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        const toggleMenu = () => {
+            navLinks.classList.toggle('active');
+            hamburger.style.transform = navLinks.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0)';
+        };
+
+        hamburger.addEventListener('click', toggleMenu);
+        hamburger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleMenu();
+            }
+        });
+
+        document.querySelectorAll('.nav-links li a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    hamburger.style.transform = 'rotate(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
