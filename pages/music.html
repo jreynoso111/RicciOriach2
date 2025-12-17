@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Riccie Oriach | Música</title>
-  <meta name="description" content="Música oficial de Riccie Oriach. Folclore Futurista, lanzamientos y videos." />
+  <meta name="description" content="Música oficial de Riccie Oriach. Folclore Futurista: lanzamientos, playlist y videos." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --color-bg: #300505;
-      --color-text: #F4F4F4;
-      --color-accent: #FF5E6C;
-      --color-secondary: #FFD700;
+      --color-bg: #300505;       /* Rojo Vino Profundo */
+      --color-text: #F4F4F4;     /* Blanco Hueso */
+      --color-accent: #FF5E6C;   /* Rosa Guayaba */
+      --color-secondary: #FFD700;/* Amarillo Sol */
       --color-outline: rgba(255, 94, 108, 0.7);
 
       --texture-offset-y: 15%;
@@ -24,13 +24,17 @@
       --overlay-soft: rgba(24, 3, 3, 0.42);
       --overlay-sheen: rgba(255, 94, 108, 0.04);
 
-      --card-bg: rgba(48, 5, 5, 0.55);
-      --card-border: rgba(255, 94, 108, 0.22);
-      --glass-blur: blur(12px);
+      --glass: rgba(48, 5, 5, 0.55);
+      --glass-2: rgba(0, 0, 0, 0.18);
+      --border: rgba(255, 94, 108, 0.22);
+      --border-soft: rgba(255,255,255,0.10);
       --shadow: 0 20px 50px rgba(0,0,0,0.35);
+      --radius-lg: 26px;
+      --radius-md: 18px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       background-color: var(--color-bg);
       color: var(--color-text);
@@ -69,19 +73,20 @@
       pointer-events: none;
     }
 
-    /* Navbar */
+    /* NAVBAR */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1.5rem 2rem;
       position: absolute;
-      top: 0; left: 0; width: 100%;
+      top: 0; left: 0;
+      width: 100%;
       z-index: 100;
       background: linear-gradient(to bottom, rgba(48, 5, 5, 0.8), transparent);
     }
 
-    .logo { margin-left: 14px; } /* Consistente con tu ajuste */
+    .logo { margin-left: 14px; }
     .logo a {
       font-family: 'Abril Fatface', cursive;
       font-size: 1.5rem;
@@ -119,35 +124,31 @@
       background-color: var(--color-accent);
       transition: width 0.3s;
     }
+
     .nav-links li a:hover::after { width: 100%; }
     .nav-links li a:hover { color: var(--color-accent); text-shadow: 0 0 6px rgba(255,94,108,0.55); }
 
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .hamburger span { width: 25px; height: 3px; background-color: white; transition: transform 0.3s; }
 
-    /* Layout helpers */
-    .container {
-      width: min(1100px, 92vw);
-      margin: 0 auto;
-    }
-
-    .section {
-      padding: 4.2rem 0;
-    }
+    /* LAYOUT */
+    .container { width: min(1150px, 92vw); margin: 0 auto; }
+    .section { padding: 4.2rem 0; }
 
     .section-title {
       font-family: 'Abril Fatface', cursive;
       font-size: clamp(2.2rem, 3.2vw, 3rem);
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.7rem;
       text-shadow: 0 0 15px rgba(255, 94, 108, 0.25);
     }
 
     .section-subtitle {
-      opacity: 0.85;
+      opacity: 0.86;
       font-weight: 300;
-      letter-spacing: 1px;
-      max-width: 70ch;
+      letter-spacing: 0.8px;
+      max-width: 75ch;
       margin-bottom: 2rem;
+      line-height: 1.55;
     }
 
     .pill {
@@ -159,7 +160,7 @@
       background: rgba(255, 215, 0, 0.07);
       border-radius: 999px;
       color: var(--color-secondary);
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
       font-size: 0.78rem;
@@ -173,9 +174,9 @@
       box-shadow: 0 0 14px rgba(255,94,108,0.55);
     }
 
-    /* Hero Music */
+    /* HERO */
     .hero {
-      min-height: 68vh;
+      min-height: 70vh;
       display: grid;
       grid-template-columns: 1.2fr 1fr;
       gap: 2.2rem;
@@ -186,7 +187,7 @@
 
     .hero h1 {
       font-family: 'Abril Fatface', cursive;
-      font-size: clamp(3rem, 5.2vw, 4.6rem);
+      font-size: clamp(3rem, 5.2vw, 4.8rem);
       line-height: 0.95;
       text-transform: uppercase;
       margin: 1rem 0;
@@ -205,9 +206,9 @@
 
     .hero p {
       font-size: 1.05rem;
-      opacity: 0.9;
+      opacity: 0.92;
       line-height: 1.6;
-      max-width: 62ch;
+      max-width: 65ch;
     }
 
     .hero-actions {
@@ -225,7 +226,7 @@
       padding: 0.95rem 1.4rem;
       border-radius: 999px;
       text-decoration: none;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 1px;
       text-transform: uppercase;
       font-size: 0.9rem;
@@ -238,6 +239,7 @@
       color: white;
       box-shadow: 0 12px 30px rgba(255, 94, 108, 0.25);
     }
+
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 16px 40px rgba(255, 94, 108, 0.35);
@@ -250,42 +252,80 @@
       color: var(--color-secondary);
       box-shadow: 0 12px 28px rgba(0,0,0,0.22);
     }
+
     .btn-ghost:hover {
       transform: translateY(-2px);
       background: rgba(255, 215, 0, 0.12);
       box-shadow: 0 16px 38px rgba(0,0,0,0.28);
     }
 
-    /* Hero visual card */
-    .hero-card {
+    /* HERO VISUAL */
+    .hero-visual {
       background: rgba(48, 5, 5, 0.45);
       border: 1px solid rgba(255, 94, 108, 0.18);
-      border-radius: 26px;
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
       overflow: hidden;
       position: relative;
+      min-height: 340px;
     }
 
-    .hero-card::before {
+    .hero-visual::before {
       content: "";
       position: absolute;
-      inset: -40%;
-      background: radial-gradient(circle at 30% 20%, rgba(255,94,108,0.20), transparent 45%),
-                  radial-gradient(circle at 80% 70%, rgba(255,215,0,0.16), transparent 46%);
-      filter: blur(0px);
+      inset: -35%;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,94,108,0.22), transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(255,215,0,0.18), transparent 48%);
       pointer-events: none;
     }
 
-    .hero-card-inner {
+    .hero-visual-inner {
       position: relative;
-      padding: 1.5rem;
       display: grid;
-      gap: 1rem;
+      grid-template-rows: auto 1fr;
+      gap: 12px;
+      padding: 1.4rem;
     }
 
-    .stat-row {
+    .hero-cover {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+      height: 190px;
+      position: relative;
+    }
+
+    .hero-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.05) saturate(1.08);
+      transform: scale(1.02);
+    }
+
+    .hero-cover .cover-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 94, 108, 0.16);
+      border: 1px solid rgba(255, 94, 108, 0.28);
+      color: var(--color-accent);
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .hero-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
@@ -297,185 +337,73 @@
       border-radius: 18px;
       padding: 14px;
     }
+
     .stat .k {
       font-size: 0.78rem;
       opacity: 0.75;
       letter-spacing: 1.2px;
       text-transform: uppercase;
     }
+
     .stat .v {
-      font-weight: 800;
+      font-weight: 900;
       margin-top: 6px;
       font-size: 1.05rem;
       color: var(--color-secondary);
     }
 
-    .mini-note {
-      opacity: 0.85;
-      font-size: 0.95rem;
-      line-height: 1.55;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 12px;
-    }
-
-    /* Cards / grids */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.2rem;
-    }
+    /* FEATURED / CARDS */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
 
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
-      padding: 1.4rem;
-      position: relative;
       overflow: hidden;
+      position: relative;
+      min-height: 250px;
     }
 
-    .card::after {
+    .card .media {
+      height: 160px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.06) saturate(1.1);
+      transform: scale(1.03);
+    }
+
+    .card .media::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 30% 20%, rgba(255,94,108,0.11), transparent 45%);
-      pointer-events: none;
+      background: linear-gradient(to top, rgba(48,5,5,0.85), rgba(48,5,5,0.05));
     }
+
+    .card-body { padding: 1.2rem 1.25rem 1.25rem; position: relative; }
 
     .card h3 {
       font-family: 'Abril Fatface', cursive;
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       margin-bottom: 0.35rem;
-      position: relative;
     }
 
     .card p {
       opacity: 0.86;
-      line-height: 1.6;
-      position: relative;
+      line-height: 1.55;
     }
 
-    .card a.inline {
-      position: relative;
-      display: inline-flex;
-      margin-top: 12px;
-      gap: 10px;
-      align-items: center;
-      color: var(--color-secondary);
-      font-weight: 800;
-      text-decoration: none;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-    }
-    .card a.inline:hover { color: #ffe066; }
-
-    /* Media section */
-    .media-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin-top: 1.6rem;
-    }
-
-    .media-card {
-      width: 25vw;
-      min-width: 300px;
-      max-width: 520px;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 12px 34px rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,94,108,0.18);
-      background: rgba(0,0,0,0.12);
-    }
-
-    .spotify-card iframe,
-    .youtube-card iframe {
-      width: 100%;
-      height: 352px; /* sincronizado */
-      border: none;
-      display: block;
-    }
-
-    .fallback {
-      margin-top: 1rem;
-      opacity: 0.85;
-      font-size: 0.95rem;
-    }
-    .fallback a { color: var(--color-secondary); font-weight: 800; text-decoration: none; }
-    .fallback a:hover { text-decoration: underline; }
-
-    /* Releases */
-    .release-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.2rem;
-    }
-
-    .release {
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(0,0,0,0.18);
-      box-shadow: 0 12px 34px rgba(0,0,0,0.32);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      position: relative;
-    }
-
-    .release:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 46px rgba(0,0,0,0.42);
-    }
-
-    .release-cover {
-      height: 170px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,94,108,0.35), transparent 55%),
-                  radial-gradient(circle at 80% 70%, rgba(255,215,0,0.25), transparent 58%),
-                  rgba(255,255,255,0.03);
-      position: relative;
-    }
-
-    .release-badge {
-      position: absolute;
-      top: 14px; left: 14px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255, 94, 108, 0.16);
-      border: 1px solid rgba(255, 94, 108, 0.28);
-      color: var(--color-accent);
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-    }
-
-    .release-body {
-      padding: 1rem 1.1rem 1.15rem;
-    }
-
-    .release-title {
-      font-weight: 900;
-      letter-spacing: 0.5px;
-      font-size: 1.05rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .release-meta {
-      opacity: 0.78;
-      font-weight: 300;
-      margin-bottom: 0.85rem;
-    }
-
-    .release-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    .card .actions { margin-top: 0.95rem; display: flex; gap: 10px; flex-wrap: wrap; }
 
     .chip {
       display: inline-flex;
@@ -486,13 +414,14 @@
       border: 1px solid rgba(255,215,0,0.25);
       background: rgba(255,215,0,0.07);
       color: var(--color-secondary);
-      font-weight: 800;
+      font-weight: 900;
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-size: 0.78rem;
       transition: background 0.25s ease, transform 0.25s ease;
     }
+
     .chip:hover { background: rgba(255,215,0,0.12); transform: translateY(-1px); }
 
     .chip.alt {
@@ -500,9 +429,117 @@
       background: rgba(255,94,108,0.10);
       color: #ffd6da;
     }
+
     .chip.alt:hover { background: rgba(255,94,108,0.14); }
 
-    /* Footer */
+    /* MEDIA EMBEDS */
+    .media-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1.6rem;
+    }
+
+    .embed {
+      width: 28vw;
+      min-width: 320px;
+      max-width: 560px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,94,108,0.18);
+      background: rgba(0,0,0,0.12);
+    }
+
+    .embed iframe {
+      width: 100%;
+      height: 352px; /* sincronizado */
+      border: none;
+      display: block;
+    }
+
+    .fallback {
+      margin-top: 1rem;
+      opacity: 0.86;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .fallback a { color: var(--color-secondary); font-weight: 900; text-decoration: none; }
+    .fallback a:hover { text-decoration: underline; }
+
+    /* RELEASES */
+    .release-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+
+    .release {
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      background: rgba(0,0,0,0.18);
+      box-shadow: 0 12px 34px rgba(0,0,0,0.32);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    .release:hover { transform: translateY(-4px); box-shadow: 0 18px 46px rgba(0,0,0,0.42); }
+
+    .release-cover {
+      height: 175px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .release-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.05) saturate(1.08);
+      transform: scale(1.03);
+    }
+
+    .release-cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(48,5,5,0.82), rgba(48,5,5,0.05));
+    }
+
+    .release-badge {
+      position: absolute;
+      top: 14px; left: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 94, 108, 0.16);
+      border: 1px solid rgba(255, 94, 108, 0.28);
+      color: var(--color-accent);
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 2;
+    }
+
+    .release-body { padding: 1rem 1.1rem 1.15rem; position: relative; }
+
+    .release-title {
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .release-meta { opacity: 0.78; font-weight: 300; margin-bottom: 0.85rem; }
+
+    .release-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 3.6rem 1rem;
@@ -510,25 +547,29 @@
       margin-top: 2rem;
       background: linear-gradient(to top, rgba(20, 3, 3, 0.8), transparent);
     }
+
     .social-links { margin: 1.6rem 0 0.5rem; }
+
     .social-links a {
       color: var(--color-text);
       margin: 0 18px;
       text-decoration: none;
-      font-weight: 800;
+      font-weight: 900;
       text-transform: uppercase;
       font-size: 0.85rem;
       transition: all 0.3s;
       letter-spacing: 1px;
     }
+
     .social-links a:hover { color: var(--color-secondary); text-shadow: 0 0 10px rgba(255,215,0,0.45); }
+
     footer p { opacity: 0.65; font-size: 0.9rem; }
 
-    /* Responsive */
+    /* RESPONSIVE */
     @media (max-width: 980px) {
       .hero { grid-template-columns: 1fr; }
-      .hero-card { max-width: 720px; }
       .release-grid { grid-template-columns: repeat(2, 1fr); }
+      .embed { width: 86vw; max-width: 760px; }
     }
 
     @media (max-width: 768px) {
@@ -551,12 +592,13 @@
         transform: translateY(-20px);
         transition: all 0.3s ease;
       }
+
       .nav-links.active { display: flex; opacity: 1; transform: translateY(0); }
       .hamburger { display: flex; }
 
       .grid-2 { grid-template-columns: 1fr; }
       .release-grid { grid-template-columns: 1fr; }
-      .media-card { width: 88vw; min-width: 0; }
+      .embed { width: 90vw; min-width: 0; }
     }
   </style>
 </head>
@@ -590,8 +632,7 @@
         </h1>
 
         <p>
-          Folclore Futurista con raíz caribeña. Aquí encuentras lanzamientos, playlists, y los videos oficiales.
-          Todo en un mismo espacio, limpio y directo.
+          Folclore Futurista con raíz caribeña. Aquí tienes lanzamientos, playlist y videos con una estética limpia, densa y bailable.
         </p>
 
         <div class="hero-actions">
@@ -600,9 +641,20 @@
         </div>
       </div>
 
-      <div class="hero-card">
-        <div class="hero-card-inner">
-          <div class="stat-row">
+      <!-- Visual con imagen sample de internet -->
+      <div class="hero-visual">
+        <div class="hero-visual-inner">
+          <div class="hero-cover">
+            <span class="cover-tag">Featured</span>
+            <!-- Sample image (internet). Reemplaza por tu cover real cuando quieras. -->
+            <img
+              src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1400&q=80"
+              alt="Cover sample"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="hero-stats">
             <div class="stat">
               <div class="k">Mood</div>
               <div class="v">Caribe Futurista</div>
@@ -612,20 +664,6 @@
               <div class="v">Denso & Bailable</div>
             </div>
           </div>
-          <div class="stat-row">
-            <div class="stat">
-              <div class="k">Sonido</div>
-              <div class="v">Folclore Alternativo</div>
-            </div>
-            <div class="stat">
-              <div class="k">Live</div>
-              <div class="v">Tour / Festivales</div>
-            </div>
-          </div>
-
-          <div class="mini-note">
-            Tip: Si quieres destacar un álbum o playlist específico aquí arriba, dime el link y lo pongo como “Featured Release”.
-          </div>
         </div>
       </div>
     </section>
@@ -634,25 +672,45 @@
     <section class="section">
       <h2 class="section-title">Destacados</h2>
       <p class="section-subtitle">
-        Selección rápida para entrar al universo. Dos accesos directos y listo.
+        Accesos rápidos con visuales sample (imágenes de internet). Luego cambias por covers reales.
       </p>
 
       <div class="grid-2">
-        <div class="card">
-          <h3>Playlist esencial</h3>
-          <p>
-            Una ruta corta por los temas clave. Ideal para empezar sin perder el hilo.
-          </p>
-          <a class="inline" href="#listen">Ir a escuchar →</a>
-        </div>
+        <article class="card">
+          <div class="media">
+            <img
+              src="https://images.unsplash.com/photo-1527261834078-9b37d35a4a32?auto=format&fit=crop&w=1400&q=80"
+              alt="Playlist sample"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3>Playlist esencial</h3>
+            <p>Una ruta corta por los temas clave. Ideal para empezar sin perder el hilo.</p>
+            <div class="actions">
+              <a class="chip" href="#listen">Escuchar</a>
+              <a class="chip alt" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir Spotify</a>
+            </div>
+          </div>
+        </article>
 
-        <div class="card">
-          <h3>Video recomendado</h3>
-          <p>
-            Visuales oficiales con el mismo ADN: tradición + futuro, sin maquillaje.
-          </p>
-          <a class="inline" href="#listen">Ver el video →</a>
-        </div>
+        <article class="card">
+          <div class="media">
+            <img
+              src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1400&q=80"
+              alt="Video sample"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3>Video recomendado</h3>
+            <p>Visuales oficiales con el mismo ADN: tradición + futuro, sin maquillaje.</p>
+            <div class="actions">
+              <a class="chip" href="#listen">Ver</a>
+              <a class="chip alt" href="#listen">YouTube</a>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -660,11 +718,11 @@
     <section id="listen" class="section">
       <h2 class="section-title">Escuchar & Ver</h2>
       <p class="section-subtitle">
-        Spotify y YouTube en paralelo. Misma altura para que el layout se vea premium.
+        Spotify y YouTube en paralelo. Misma altura (352px) para un layout premium.
       </p>
 
       <div class="media-wrap">
-        <div class="media-card spotify-card">
+        <div class="embed">
           <iframe
             src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -674,7 +732,7 @@
           ></iframe>
         </div>
 
-        <div class="media-card youtube-card">
+        <div class="embed">
           <iframe
             src="https://www.youtube.com/embed/6Zn7H97v1HM"
             title="Riccie Oriach - La Guayaba (Official Video)"
@@ -685,8 +743,7 @@
       </div>
 
       <div class="fallback">
-        ¿No carga el reproductor?
-        <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir perfil en Spotify</a>
+        ¿No carga el reproductor? <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir perfil en Spotify</a>
       </div>
     </section>
 
@@ -694,14 +751,18 @@
     <section class="section">
       <h2 class="section-title">Releases</h2>
       <p class="section-subtitle">
-        Aquí puedes mostrar álbumes/singles. Ahora mismo están como placeholders con estética del sitio.
-        (Si me das los links, los conecto a Spotify/Apple/YouTube Music.)
+        Cards con covers sample (internet). Sustituye por carátulas reales cuando tengas los links.
       </p>
 
       <div class="release-grid">
         <article class="release">
           <div class="release-cover">
             <span class="release-badge">Single</span>
+            <img
+              src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&w=1400&q=80"
+              alt="Cover sample 1"
+              loading="lazy"
+            />
           </div>
           <div class="release-body">
             <div class="release-title">La Guayaba</div>
@@ -716,6 +777,11 @@
         <article class="release">
           <div class="release-cover">
             <span class="release-badge">EP</span>
+            <img
+              src="https://images.unsplash.com/photo-1521334726092-b509a19597c1?auto=format&fit=crop&w=1400&q=80"
+              alt="Cover sample 2"
+              loading="lazy"
+            />
           </div>
           <div class="release-body">
             <div class="release-title">Folclore del Futuro</div>
@@ -730,6 +796,11 @@
         <article class="release">
           <div class="release-cover">
             <span class="release-badge">Album</span>
+            <img
+              src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1400&q=80"
+              alt="Cover sample 3"
+              loading="lazy"
+            />
           </div>
           <div class="release-body">
             <div class="release-title">Maquiné</div>
@@ -755,7 +826,7 @@
   </footer>
 
   <script>
-    // --- Canvas particles (igual estilo que tu index) ---
+    // --- Canvas particles (mismo estilo que tu index) ---
     const canvas = document.getElementById('canvas-bg');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -802,7 +873,9 @@
     function initParticles() {
       particlesArray = [];
       let numberOfParticles = (canvas.height * canvas.width) / 9000;
-      for (let i = 0; i < numberOfParticles; i++) particlesArray.push(new Particle());
+      for (let i = 0; i < numberOfParticles; i++) {
+        particlesArray.push(new Particle());
+      }
     }
 
     function animateParticles() {
@@ -825,7 +898,7 @@
       scrollTimeout = setTimeout(resetMultiplier, 250);
     });
 
-    // --- Menú móvil / accesible (mismo approach que tu index) ---
+    // --- Menú móvil / accesible (como tu index) ---
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
 
