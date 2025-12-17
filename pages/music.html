@@ -355,6 +355,82 @@
     /* FEATURED / CARDS */
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
 
+    /* TEXTO / MANIFIESTO */
+    .prose-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.2rem;
+      align-items: start;
+    }
+
+    .prose-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      padding: 1.4rem 1.4rem 1.5rem;
+    }
+
+    .prose-card h3 {
+      font-family: 'Abril Fatface', cursive;
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .prose {
+      line-height: 1.75;
+      font-size: 1.05rem;
+      opacity: 0.92;
+    }
+
+    .prose p { margin-top: 0.9rem; }
+
+    .keylines {
+      margin-top: 1rem;
+      display: grid;
+      gap: 10px;
+    }
+
+    .keyline {
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.18);
+      border-radius: 18px;
+      padding: 12px 14px;
+    }
+
+    .keyline .t {
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      color: var(--color-secondary);
+      margin-bottom: 4px;
+    }
+
+    .keyline .d { opacity: 0.86; line-height: 1.55; }
+
+    .quote {
+      border-left: 3px solid rgba(255, 215, 0, 0.55);
+      padding-left: 14px;
+      margin-top: 1rem;
+      opacity: 0.9;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .quote .by {
+      display: block;
+      margin-top: 10px;
+      font-style: normal;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      opacity: 0.85;
+    }
+
     .card {
       background: var(--glass);
       border: 1px solid var(--border);
@@ -460,6 +536,68 @@
       display: block;
     }
 
+    /* Placeholders para cargar embeds con interacción del usuario (mejor compatibilidad) */
+    .embed-shell {
+      position: relative;
+      width: 100%;
+      height: 352px;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,94,108,0.18), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(255,215,0,0.14), transparent 58%),
+        rgba(0,0,0,0.25);
+      display: grid;
+      place-items: center;
+    }
+
+    .embed-shell .embed-inner {
+      text-align: center;
+      padding: 18px;
+    }
+
+    .embed-shell .embed-title {
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: var(--color-secondary);
+    }
+
+    .embed-shell .embed-desc {
+      opacity: 0.86;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+
+    .embed-shell .embed-load {
+      cursor: pointer;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      background: rgba(255, 215, 0, 0.10);
+      color: var(--color-secondary);
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 12px 16px;
+      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.30);
+    }
+
+    .embed-shell .embed-load:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 215, 0, 0.14);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.38);
+    }
+
+    .embed-shell .embed-open {
+      display: inline-flex;
+      margin-top: 12px;
+      color: rgba(255,255,255,0.88);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .embed-shell .embed-open:hover { text-decoration: underline; }
+
     .fallback {
       margin-top: 1rem;
       opacity: 0.86;
@@ -470,74 +608,58 @@
     .fallback a { color: var(--color-secondary); font-weight: 900; text-decoration: none; }
     .fallback a:hover { text-decoration: underline; }
 
-    /* RELEASES */
-    .release-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    /* DISCOGRAFÍA (TABLA MINIMAL) */
+    .discography {
+      display: grid;
+    }
 
-    .release {
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid var(--border-soft);
+    .discography-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 120px 220px;
+      gap: 12px;
+      padding: 14px 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      align-items: center;
+    }
+
+    .discography-row:first-child { border-top: none; }
+
+    .discography-head {
       background: rgba(0,0,0,0.18);
-      box-shadow: 0 12px 34px rgba(0,0,0,0.32);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      position: relative;
-    }
-
-    .release:hover { transform: translateY(-4px); box-shadow: 0 18px 46px rgba(0,0,0,0.42); }
-
-    .release-cover {
-      height: 175px;
-      position: relative;
-      overflow: hidden;
       border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .release-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: contrast(1.05) saturate(1.08);
-      transform: scale(1.03);
-    }
-
-    .release-cover::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(48,5,5,0.82), rgba(48,5,5,0.05));
-    }
-
-    .release-badge {
-      position: absolute;
-      top: 14px; left: 14px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255, 94, 108, 0.16);
-      border: 1px solid rgba(255, 94, 108, 0.28);
-      color: var(--color-accent);
       font-weight: 900;
       letter-spacing: 1px;
       text-transform: uppercase;
-      font-size: 0.75rem;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      z-index: 2;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.92);
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
-    .release-body { padding: 1rem 1.1rem 1.15rem; position: relative; }
+    .discography-title { font-weight: 900; font-size: 1.02rem; }
+    .discography-meta { opacity: 0.78; font-weight: 300; margin-top: 2px; }
 
-    .release-title {
-      font-weight: 900;
-      letter-spacing: 0.5px;
-      font-size: 1.05rem;
-      margin-bottom: 0.35rem;
+    .discography-row:hover {
+      background: rgba(255,255,255,0.04);
     }
 
-    .release-meta { opacity: 0.78; font-weight: 300; margin-bottom: 0.85rem; }
+    .discography .c1 { color: var(--color-secondary); font-weight: 900; font-family: 'Abril Fatface', cursive; }
+    .discography .c3 { opacity: 0.9; font-weight: 700; }
 
-    .release-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    @media (max-width: 980px) {
+      .discography-row {
+        grid-template-columns: 70px 1fr;
+        grid-template-areas:
+          "year title"
+          "type actions";
+      }
+      .discography-head { display: none; }
+      .discography .c1 { grid-area: year; }
+      .discography .c2 { grid-area: title; }
+      .discography .c3 { grid-area: type; }
+      .discography .c4 { grid-area: actions; }
+    }
 
     /* FOOTER */
     footer {
@@ -567,6 +689,7 @@
 
     /* RESPONSIVE */
     @media (max-width: 980px) {
+      .prose-grid { grid-template-columns: 1fr; }
       .hero { grid-template-columns: 1fr; }
       .release-grid { grid-template-columns: repeat(2, 1fr); }
       .embed { width: 86vw; max-width: 760px; }
@@ -636,8 +759,8 @@
         </p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#listen">Escuchar ahora</a>
           <a class="btn btn-ghost" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
+          <a class="btn btn-ghost" href="https://www.youtube.com/watch?v=6Zn7H97v1HM" target="_blank" rel="noopener noreferrer">YouTube</a>
         </div>
       </div>
 
@@ -645,7 +768,7 @@
       <div class="hero-visual">
         <div class="hero-visual-inner">
           <div class="hero-cover">
-            <span class="cover-tag">Featured</span>
+            <span class="cover-tag">Destacado</span>
             <!-- Sample image (internet). Reemplaza por tu cover real cuando quieras. -->
             <img
               src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1400&q=80"
@@ -656,11 +779,11 @@
 
           <div class="hero-stats">
             <div class="stat">
-              <div class="k">Mood</div>
+              <div class="k">Ambiente</div>
               <div class="v">Caribe Futurista</div>
             </div>
             <div class="stat">
-              <div class="k">Vibe</div>
+              <div class="k">Sensación</div>
               <div class="v">Denso & Bailable</div>
             </div>
           </div>
@@ -668,149 +791,149 @@
       </div>
     </section>
 
-    <!-- DESTACADOS -->
+    <!-- SOBRE LA MÚSICA -->
     <section class="section">
-      <h2 class="section-title">Destacados</h2>
+      <h2 class="section-title">Sobre la música</h2>
       <p class="section-subtitle">
-        Accesos rápidos con visuales sample (imágenes de internet). Luego cambias por covers reales.
+        Esta página existe para entender el universo sonoro de Riccie: de dónde viene, qué mezcla y qué te deja después de escucharlo.
       </p>
 
-      <div class="grid-2">
-        <article class="card">
-          <div class="media">
-            <img
-              src="https://images.unsplash.com/photo-1527261834078-9b37d35a4a32?auto=format&fit=crop&w=1400&q=80"
-              alt="Playlist sample"
-              loading="lazy"
-            />
-          </div>
-          <div class="card-body">
-            <h3>Playlist esencial</h3>
-            <p>Una ruta corta por los temas clave. Ideal para empezar sin perder el hilo.</p>
-            <div class="actions">
-              <a class="chip" href="#listen">Escuchar</a>
-              <a class="chip alt" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir Spotify</a>
-            </div>
-          </div>
-        </article>
+      <div class="prose-grid">
+        <div class="prose-card">
+          <h3>Folclore futurista</h3>
+          <div class="prose">
+            <p>
+              La música de Riccie Oriach se mueve entre lo ancestral y lo que todavía no tiene nombre. Parte del Caribe —su ritmo, su calle, su calor—
+              y lo empuja hacia un presente eléctrico: percusiones orgánicas, texturas digitales, coros que parecen ritual y melodías que se quedan como estribillos de madrugada.
+            </p>
+            <p>
+              Aquí no se trata de “fusionar por fusionar”. Se trata de respetar la raíz, y al mismo tiempo deformarla con intención: cambiar el ángulo, acelerar el pulso,
+              abrir espacio para el silencio y volver a entrar con brillo. El resultado es denso, bailable y emocional; música que puede sonar íntima en audífonos,
+              y también enorme en un escenario.
+            </p>
 
-        <article class="card">
-          <div class="media">
-            <img
-              src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1400&q=80"
-              alt="Video sample"
-              loading="lazy"
-            />
-          </div>
-          <div class="card-body">
-            <h3>Video recomendado</h3>
-            <p>Visuales oficiales con el mismo ADN: tradición + futuro, sin maquillaje.</p>
-            <div class="actions">
-              <a class="chip" href="#listen">Ver</a>
-              <a class="chip alt" href="#listen">YouTube</a>
+            <div class="quote">
+              “Tradición en una mano, futuro en la otra: lo caribeño como ciencia ficción cotidiana.”
+              <span class="by">— Nota de la casa</span>
             </div>
           </div>
-        </article>
+        </div>
+
+        <div class="prose-card">
+          <h3>Claves para escuchar</h3>
+          <div class="keylines">
+            <div class="keyline">
+              <div class="t">Ritmo</div>
+              <div class="d">Percusión y groove como centro: primero el cuerpo, luego la mente.</div>
+            </div>
+            <div class="keyline">
+              <div class="t">Textura</div>
+              <div class="d">Capas: orgánico + digital, brillo + tierra, golpes secos + aire.</div>
+            </div>
+            <div class="keyline">
+              <div class="t">Letra</div>
+              <div class="d">Imágenes y símbolos: lo cotidiano se vuelve mito sin ponerse solemne.</div>
+            </div>
+            <div class="keyline">
+              <div class="t">Energía</div>
+              <div class="d">Del trance a la celebración: canciones que suben sin pedir permiso.</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ESCUCHAR -->
-    <section id="listen" class="section">
-      <h2 class="section-title">Escuchar & Ver</h2>
+    <!-- ESCUCHAR Y VER -->
+    <section class="section" id="escuchar">
+      <h2 class="section-title">Escuchar y ver</h2>
       <p class="section-subtitle">
-        Spotify y YouTube en paralelo. Misma altura (352px) para un layout premium.
+        Reproductores integrados para escuchar en Spotify y ver en YouTube. Si tu navegador bloquea iframes, puedes abrirlos en una pestaña nueva.
       </p>
 
       <div class="media-wrap">
-        <div class="embed">
-          <iframe
-            src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            title="Riccie Oriach en Spotify"
-            referrerpolicy="strict-origin-when-cross-origin"
-          ></iframe>
+        <!-- Spotify: se carga al hacer click para evitar bloqueos de privacidad/terceros -->
+        <div class="embed" data-embed-kind="spotify" data-embed-src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0" data-open-url="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV">
+          <div class="embed-shell">
+            <div class="embed-inner">
+              <div class="embed-title">Spotify</div>
+              <div class="embed-desc">Cargar reproductor aquí mismo.</div>
+              <button class="embed-load" type="button">Cargar Spotify</button>
+              <a class="embed-open" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir en Spotify ↗</a>
+            </div>
+          </div>
         </div>
 
-        <div class="embed">
-          <iframe
-            src="https://www.youtube.com/embed/6Zn7H97v1HM"
-            title="Riccie Oriach - La Guayaba (Official Video)"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
+        <!-- YouTube: usamos dominio nocookie y carga bajo interacción -->
+        <div class="embed" data-embed-kind="youtube" data-embed-src="https://www.youtube-nocookie.com/embed/6Zn7H97v1HM" data-open-url="https://www.youtube.com/watch?v=6Zn7H97v1HM">
+          <div class="embed-shell">
+            <div class="embed-inner">
+              <div class="embed-title">YouTube</div>
+              <div class="embed-desc">Cargar video aquí mismo.</div>
+              <button class="embed-load" type="button">Cargar YouTube</button>
+              <a class="embed-open" href="https://www.youtube.com/watch?v=6Zn7H97v1HM" target="_blank" rel="noopener noreferrer">Abrir en YouTube ↗</a>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="fallback">
-        ¿No carga el reproductor? <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir perfil en Spotify</a>
+        ¿Problemas de carga? <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir perfil en Spotify</a>
       </div>
     </section>
 
-    <!-- RELEASES -->
+    <!-- DISCOGRAFÍA (MINIMAL) -->
     <section class="section">
-      <h2 class="section-title">Releases</h2>
+      <h2 class="section-title">Discografía</h2>
       <p class="section-subtitle">
-        Cards con covers sample (internet). Sustituye por carátulas reales cuando tengas los links.
+        Selección corta y visual. Cuando tengas enlaces oficiales (Spotify/Apple/Bandcamp), los conectamos aquí.
       </p>
 
-      <div class="release-grid">
-        <article class="release">
-          <div class="release-cover">
-            <span class="release-badge">Single</span>
-            <img
-              src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&w=1400&q=80"
-              alt="Cover sample 1"
-              loading="lazy"
-            />
+      <div class="prose-card" style="padding: 0; overflow: hidden;">
+        <div class="discography">
+          <div class="discography-row discography-head">
+            <div class="c1">Año</div>
+            <div class="c2">Lanzamiento</div>
+            <div class="c3">Tipo</div>
+            <div class="c4">Acciones</div>
           </div>
-          <div class="release-body">
-            <div class="release-title">La Guayaba</div>
-            <div class="release-meta">2025 • Official Release</div>
-            <div class="release-actions">
-              <a class="chip" href="#listen">Escuchar</a>
-              <a class="chip alt" href="#listen">Ver video</a>
-            </div>
-          </div>
-        </article>
 
-        <article class="release">
-          <div class="release-cover">
-            <span class="release-badge">EP</span>
-            <img
-              src="https://images.unsplash.com/photo-1521334726092-b509a19597c1?auto=format&fit=crop&w=1400&q=80"
-              alt="Cover sample 2"
-              loading="lazy"
-            />
-          </div>
-          <div class="release-body">
-            <div class="release-title">Folclore del Futuro</div>
-            <div class="release-meta">2025 • EP</div>
-            <div class="release-actions">
-              <a class="chip" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
-              <a class="chip alt" href="#listen">YouTube</a>
+          <div class="discography-row">
+            <div class="c1">2025</div>
+            <div class="c2">
+              <div class="discography-title">La Guayaba</div>
+              <div class="discography-meta">Lanzamiento destacado</div>
+            </div>
+            <div class="c3">Sencillo</div>
+            <div class="c4">
+              <a class="chip" href="#escuchar">Escuchar</a>
+              <a class="chip alt" href="#escuchar">Ver</a>
             </div>
           </div>
-        </article>
 
-        <article class="release">
-          <div class="release-cover">
-            <span class="release-badge">Album</span>
-            <img
-              src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1400&q=80"
-              alt="Cover sample 3"
-              loading="lazy"
-            />
-          </div>
-          <div class="release-body">
-            <div class="release-title">Maquiné</div>
-            <div class="release-meta">2024 • Album</div>
-            <div class="release-actions">
+          <div class="discography-row">
+            <div class="c1">2025</div>
+            <div class="c2">
+              <div class="discography-title">Folclore del Futuro</div>
+              <div class="discography-meta">Proyecto / colección</div>
+            </div>
+            <div class="c3">EP</div>
+            <div class="c4">
               <a class="chip" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
-              <a class="chip alt" href="#listen">Video</a>
             </div>
           </div>
-        </article>
+
+          <div class="discography-row">
+            <div class="c1">2024</div>
+            <div class="c2">
+              <div class="discography-title">Maquiné</div>
+              <div class="discography-meta">Álbum</div>
+            </div>
+            <div class="c3">Álbum</div>
+            <div class="c4">
+              <a class="chip" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -922,6 +1045,43 @@
           hamburger.style.transform = 'rotate(0)';
         }
       });
+    });
+
+    // --- Carga de embeds (Spotify/YouTube) con interacción del usuario ---
+    function mountEmbed(container) {
+      const kind = container.getAttribute('data-embed-kind');
+      const src = container.getAttribute('data-embed-src');
+
+      // Evita recargar
+      if (container.getAttribute('data-embed-mounted') === '1') return;
+
+      const iframe = document.createElement('iframe');
+      iframe.src = src;
+      iframe.loading = 'lazy';
+      iframe.style.width = '100%';
+      iframe.style.height = '352px';
+      iframe.style.border = 'none';
+
+      if (kind === 'spotify') {
+        iframe.title = 'Riccie Oriach en Spotify';
+        iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      } else if (kind === 'youtube') {
+        iframe.title = 'Riccie Oriach - Video en YouTube';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+      }
+
+      container.innerHTML = '';
+      container.appendChild(iframe);
+      container.setAttribute('data-embed-mounted', '1');
+    }
+
+    document.querySelectorAll('.embed').forEach(embed => {
+      const btn = embed.querySelector('.embed-load');
+      if (btn) {
+        btn.addEventListener('click', () => mountEmbed(embed));
+      }
     });
 
     // Smooth scroll
