@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-padding-top: 100px;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riccie Oriach | Música</title>
+  <meta name="description" content="Música oficial de Riccie Oriach. Folclore Futurista, lanzamientos y videos." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-bg: #300505;
+      --color-text: #F4F4F4;
+      --color-accent: #FF5E6C;
+      --color-secondary: #FFD700;
+      --color-outline: rgba(255, 94, 108, 0.7);
+
+      --texture-offset-y: 15%;
+      --texture-opacity: 0.48;
+      --overlay-strong: rgba(58, 10, 10, 0.55);
+      --overlay-soft: rgba(24, 3, 3, 0.42);
+      --overlay-sheen: rgba(255, 94, 108, 0.04);
+
+      --card-bg: rgba(48, 5, 5, 0.55);
+      --card-border: rgba(255, 94, 108, 0.22);
+      --glass-blur: blur(12px);
+      --shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+      position: relative;
+    }
+
+    /* Fondo textura + overlays */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background-image: url('Assets/images/texture.png');
+      background-size: cover;
+      background-position: center var(--texture-offset-y);
+      background-repeat: no-repeat;
+      opacity: var(--texture-opacity);
+      z-index: -3;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(circle at 50% 50%, var(--overlay-strong) 0%, var(--overlay-soft) 100%),
+        linear-gradient(45deg, var(--overlay-sheen), transparent);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #canvas-bg {
+      position: fixed; inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      position: absolute;
+      top: 0; left: 0; width: 100%;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(48, 5, 5, 0.8), transparent);
+    }
+
+    .logo { margin-left: 14px; } /* Consistente con tu ajuste */
+    .logo a {
+      font-family: 'Abril Fatface', cursive;
+      font-size: 1.5rem;
+      color: var(--color-secondary);
+      letter-spacing: 1px;
+      text-decoration: none;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: var(--color-text);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      position: relative;
+      letter-spacing: 0.6px;
+    }
+
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -6px;
+      left: 0;
+      background-color: var(--color-accent);
+      transition: width 0.3s;
+    }
+    .nav-links li a:hover::after { width: 100%; }
+    .nav-links li a:hover { color: var(--color-accent); text-shadow: 0 0 6px rgba(255,94,108,0.55); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 25px; height: 3px; background-color: white; transition: transform 0.3s; }
+
+    /* Layout helpers */
+    .container {
+      width: min(1100px, 92vw);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 4.2rem 0;
+    }
+
+    .section-title {
+      font-family: 'Abril Fatface', cursive;
+      font-size: clamp(2.2rem, 3.2vw, 3rem);
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 15px rgba(255, 94, 108, 0.25);
+    }
+
+    .section-subtitle {
+      opacity: 0.85;
+      font-weight: 300;
+      letter-spacing: 1px;
+      max-width: 70ch;
+      margin-bottom: 2rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      background: rgba(255, 215, 0, 0.07);
+      border-radius: 999px;
+      color: var(--color-secondary);
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .pill-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      box-shadow: 0 0 14px rgba(255,94,108,0.55);
+    }
+
+    /* Hero Music */
+    .hero {
+      min-height: 68vh;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2.2rem;
+      align-items: center;
+      padding-top: 120px;
+      padding-bottom: 2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Abril Fatface', cursive;
+      font-size: clamp(3rem, 5.2vw, 4.6rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin: 1rem 0;
+    }
+
+    .outline-text {
+      -webkit-text-stroke: 2px var(--color-outline);
+      text-stroke: 2px var(--color-outline);
+      color: transparent;
+    }
+
+    .filled-text {
+      color: var(--color-accent);
+      text-shadow: 0 0 20px rgba(255, 94, 108, 0.25);
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      opacity: 0.9;
+      line-height: 1.6;
+      max-width: 62ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 1.7rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0.95rem 1.4rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: white;
+      box-shadow: 0 12px 30px rgba(255, 94, 108, 0.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(255, 94, 108, 0.35);
+      background: #ff7a85;
+    }
+
+    .btn-ghost {
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      background: rgba(255, 215, 0, 0.08);
+      color: var(--color-secondary);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 215, 0, 0.12);
+      box-shadow: 0 16px 38px rgba(0,0,0,0.28);
+    }
+
+    /* Hero visual card */
+    .hero-card {
+      background: rgba(48, 5, 5, 0.45);
+      border: 1px solid rgba(255, 94, 108, 0.18);
+      border-radius: 26px;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 30% 20%, rgba(255,94,108,0.20), transparent 45%),
+                  radial-gradient(circle at 80% 70%, rgba(255,215,0,0.16), transparent 46%);
+      filter: blur(0px);
+      pointer-events: none;
+    }
+
+    .hero-card-inner {
+      position: relative;
+      padding: 1.5rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .stat .k {
+      font-size: 0.78rem;
+      opacity: 0.75;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    .stat .v {
+      font-weight: 800;
+      margin-top: 6px;
+      font-size: 1.05rem;
+      color: var(--color-secondary);
+    }
+
+    .mini-note {
+      opacity: 0.85;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 12px;
+    }
+
+    /* Cards / grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow: var(--shadow);
+      padding: 1.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(255,94,108,0.11), transparent 45%);
+      pointer-events: none;
+    }
+
+    .card h3 {
+      font-family: 'Abril Fatface', cursive;
+      font-size: 1.6rem;
+      margin-bottom: 0.35rem;
+      position: relative;
+    }
+
+    .card p {
+      opacity: 0.86;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .card a.inline {
+      position: relative;
+      display: inline-flex;
+      margin-top: 12px;
+      gap: 10px;
+      align-items: center;
+      color: var(--color-secondary);
+      font-weight: 800;
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+    .card a.inline:hover { color: #ffe066; }
+
+    /* Media section */
+    .media-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1.6rem;
+    }
+
+    .media-card {
+      width: 25vw;
+      min-width: 300px;
+      max-width: 520px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,94,108,0.18);
+      background: rgba(0,0,0,0.12);
+    }
+
+    .spotify-card iframe,
+    .youtube-card iframe {
+      width: 100%;
+      height: 352px; /* sincronizado */
+      border: none;
+      display: block;
+    }
+
+    .fallback {
+      margin-top: 1rem;
+      opacity: 0.85;
+      font-size: 0.95rem;
+    }
+    .fallback a { color: var(--color-secondary); font-weight: 800; text-decoration: none; }
+    .fallback a:hover { text-decoration: underline; }
+
+    /* Releases */
+    .release-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .release {
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+      box-shadow: 0 12px 34px rgba(0,0,0,0.32);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    .release:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 46px rgba(0,0,0,0.42);
+    }
+
+    .release-cover {
+      height: 170px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,94,108,0.35), transparent 55%),
+                  radial-gradient(circle at 80% 70%, rgba(255,215,0,0.25), transparent 58%),
+                  rgba(255,255,255,0.03);
+      position: relative;
+    }
+
+    .release-badge {
+      position: absolute;
+      top: 14px; left: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 94, 108, 0.16);
+      border: 1px solid rgba(255, 94, 108, 0.28);
+      color: var(--color-accent);
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .release-body {
+      padding: 1rem 1.1rem 1.15rem;
+    }
+
+    .release-title {
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .release-meta {
+      opacity: 0.78;
+      font-weight: 300;
+      margin-bottom: 0.85rem;
+    }
+
+    .release-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,215,0,0.25);
+      background: rgba(255,215,0,0.07);
+      color: var(--color-secondary);
+      font-weight: 800;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.78rem;
+      transition: background 0.25s ease, transform 0.25s ease;
+    }
+    .chip:hover { background: rgba(255,215,0,0.12); transform: translateY(-1px); }
+
+    .chip.alt {
+      border-color: rgba(255,94,108,0.25);
+      background: rgba(255,94,108,0.10);
+      color: #ffd6da;
+    }
+    .chip.alt:hover { background: rgba(255,94,108,0.14); }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3.6rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 2rem;
+      background: linear-gradient(to top, rgba(20, 3, 3, 0.8), transparent);
+    }
+    .social-links { margin: 1.6rem 0 0.5rem; }
+    .social-links a {
+      color: var(--color-text);
+      margin: 0 18px;
+      text-decoration: none;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+    .social-links a:hover { color: var(--color-secondary); text-shadow: 0 0 10px rgba(255,215,0,0.45); }
+    footer p { opacity: 0.65; font-size: 0.9rem; }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-card { max-width: 720px; }
+      .release-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 1rem; }
+      .logo { margin-left: 0; }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background-color: rgba(48, 5, 5, 0.95);
+        padding: 2rem;
+        border: 1px solid var(--color-accent);
+        border-radius: 15px;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s ease;
+      }
+      .nav-links.active { display: flex; opacity: 1; transform: translateY(0); }
+      .hamburger { display: flex; }
+
+      .grid-2 { grid-template-columns: 1fr; }
+      .release-grid { grid-template-columns: 1fr; }
+      .media-card { width: 88vw; min-width: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas-bg"></canvas>
+
+  <nav class="navbar">
+    <div class="logo"><a href="index.html">RICCIE ORIACH</a></div>
+    <ul class="nav-links">
+      <li><a href="index.html">INICIO</a></li>
+      <li><a href="music.html" style="color: var(--color-accent);">MÚSICA</a></li>
+      <li><a href="events.html">TICKETS</a></li>
+      <li><a href="blog.html">BLOG</a></li>
+      <li><a href="contact.html">CONTACTO</a></li>
+    </ul>
+    <div class="hamburger" aria-label="Abrir menú" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <span class="pill"><span class="pill-dot"></span> Música oficial</span>
+
+        <h1>
+          <span class="outline-text">MÚSICA</span><br />
+          <span class="filled-text">RICCIE ORIACH</span>
+        </h1>
+
+        <p>
+          Folclore Futurista con raíz caribeña. Aquí encuentras lanzamientos, playlists, y los videos oficiales.
+          Todo en un mismo espacio, limpio y directo.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#listen">Escuchar ahora</a>
+          <a class="btn btn-ghost" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-inner">
+          <div class="stat-row">
+            <div class="stat">
+              <div class="k">Mood</div>
+              <div class="v">Caribe Futurista</div>
+            </div>
+            <div class="stat">
+              <div class="k">Vibe</div>
+              <div class="v">Denso & Bailable</div>
+            </div>
+          </div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="k">Sonido</div>
+              <div class="v">Folclore Alternativo</div>
+            </div>
+            <div class="stat">
+              <div class="k">Live</div>
+              <div class="v">Tour / Festivales</div>
+            </div>
+          </div>
+
+          <div class="mini-note">
+            Tip: Si quieres destacar un álbum o playlist específico aquí arriba, dime el link y lo pongo como “Featured Release”.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESTACADOS -->
+    <section class="section">
+      <h2 class="section-title">Destacados</h2>
+      <p class="section-subtitle">
+        Selección rápida para entrar al universo. Dos accesos directos y listo.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Playlist esencial</h3>
+          <p>
+            Una ruta corta por los temas clave. Ideal para empezar sin perder el hilo.
+          </p>
+          <a class="inline" href="#listen">Ir a escuchar →</a>
+        </div>
+
+        <div class="card">
+          <h3>Video recomendado</h3>
+          <p>
+            Visuales oficiales con el mismo ADN: tradición + futuro, sin maquillaje.
+          </p>
+          <a class="inline" href="#listen">Ver el video →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESCUCHAR -->
+    <section id="listen" class="section">
+      <h2 class="section-title">Escuchar & Ver</h2>
+      <p class="section-subtitle">
+        Spotify y YouTube en paralelo. Misma altura para que el layout se vea premium.
+      </p>
+
+      <div class="media-wrap">
+        <div class="media-card spotify-card">
+          <iframe
+            src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            title="Riccie Oriach en Spotify"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        </div>
+
+        <div class="media-card youtube-card">
+          <iframe
+            src="https://www.youtube.com/embed/6Zn7H97v1HM"
+            title="Riccie Oriach - La Guayaba (Official Video)"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="fallback">
+        ¿No carga el reproductor?
+        <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir perfil en Spotify</a>
+      </div>
+    </section>
+
+    <!-- RELEASES -->
+    <section class="section">
+      <h2 class="section-title">Releases</h2>
+      <p class="section-subtitle">
+        Aquí puedes mostrar álbumes/singles. Ahora mismo están como placeholders con estética del sitio.
+        (Si me das los links, los conecto a Spotify/Apple/YouTube Music.)
+      </p>
+
+      <div class="release-grid">
+        <article class="release">
+          <div class="release-cover">
+            <span class="release-badge">Single</span>
+          </div>
+          <div class="release-body">
+            <div class="release-title">La Guayaba</div>
+            <div class="release-meta">2025 • Official Release</div>
+            <div class="release-actions">
+              <a class="chip" href="#listen">Escuchar</a>
+              <a class="chip alt" href="#listen">Ver video</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="release">
+          <div class="release-cover">
+            <span class="release-badge">EP</span>
+          </div>
+          <div class="release-body">
+            <div class="release-title">Folclore del Futuro</div>
+            <div class="release-meta">2025 • EP</div>
+            <div class="release-actions">
+              <a class="chip" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
+              <a class="chip alt" href="#listen">YouTube</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="release">
+          <div class="release-cover">
+            <span class="release-badge">Album</span>
+          </div>
+          <div class="release-body">
+            <div class="release-title">Maquiné</div>
+            <div class="release-meta">2024 • Album</div>
+            <div class="release-actions">
+              <a class="chip" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
+              <a class="chip alt" href="#listen">Video</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="logo" style="margin-bottom: 1.2rem;"><a href="index.html">RICCIE ORIACH</a></div>
+    <div class="social-links">
+      <a href="#" rel="noopener">Instagram</a>
+      <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
+      <a href="#" rel="noopener">YouTube</a>
+    </div>
+    <p>© 2025 Riccie Oriach. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // --- Canvas particles (igual estilo que tu index) ---
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray;
+    let speedMultiplier = 1;
+    let scrollTimeout;
+
+    window.addEventListener('resize', function() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    });
+
+    class Particle {
+      constructor() {
+        const hues = [90, 110, 135, 155, 180];
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 0.5;
+        const depthSpeed = this.size * 0.15;
+        this.speedX = (Math.random() * 2 - 1) * depthSpeed;
+        this.speedY = (Math.random() * 2 - 1) * depthSpeed;
+        const hue = hues[Math.floor(Math.random() * hues.length)];
+        const lightness = 45 + Math.random() * 35;
+        const alpha = 0.18 + Math.random() * 0.32;
+        this.color = `hsla(${hue}, 70%, ${lightness}%, ${alpha})`;
+      }
+      update() {
+        this.x += this.speedX * speedMultiplier;
+        this.y += this.speedY * speedMultiplier;
+        if (this.x > canvas.width) this.x = 0; else if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0; else if (this.y < 0) this.y = canvas.height;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particlesArray = [];
+      let numberOfParticles = (canvas.height * canvas.width) / 9000;
+      for (let i = 0; i < numberOfParticles; i++) particlesArray.push(new Particle());
+    }
+
+    function animateParticles() {
+      requestAnimationFrame(animateParticles);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+      }
+    }
+
+    initParticles();
+    animateParticles();
+
+    const resetMultiplier = () => { speedMultiplier = 1; };
+
+    window.addEventListener('wheel', () => {
+      speedMultiplier = 3;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(resetMultiplier, 250);
+    });
+
+    // --- Menú móvil / accesible (mismo approach que tu index) ---
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    const toggleMenu = () => {
+      navLinks.classList.toggle('active');
+      hamburger.style.transform = navLinks.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0)';
+    };
+
+    hamburger.addEventListener('click', toggleMenu);
+    hamburger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMenu();
+      }
+    });
+
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navLinks.classList.contains('active')) {
+          navLinks.classList.remove('active');
+          hamburger.style.transform = 'rotate(0)';
+        }
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
