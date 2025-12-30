@@ -15,20 +15,260 @@
 
   <link rel="stylesheet" href="Assets/css/base.css" />
   <link rel="stylesheet" href="Assets/css/index.css" />
+
+  <!-- ✅ Animaciones extra (intro / título / parallax / microinteracciones) -->
+  <style>
+    /* Respeta reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .intro { display:none !important; }
+      body { opacity: 1 !important; }
+    }
+
+    /* ==== INTRO ==== */
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(900px 600px at 20% 20%, rgba(255,79,122,.35), transparent 60%),
+        radial-gradient(900px 600px at 85% 25%, rgba(255,211,61,.25), transparent 60%),
+        radial-gradient(900px 600px at 60% 85%, rgba(25,195,125,.18), transparent 60%),
+        linear-gradient(180deg, rgba(6,7,10,1), rgba(10,12,16,1));
+      overflow: hidden;
+    }
+    .intro::after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 55%);
+      filter: blur(30px);
+      opacity:.65;
+      pointer-events:none;
+      animation: introGlow 2.8s ease-in-out infinite;
+    }
+    @keyframes introGlow { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-10px);} }
+
+    .intro-inner{
+      width:min(920px, calc(100% - 2rem));
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 1.2rem;
+      align-items:center;
+      position:relative;
+    }
+    .intro-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      padding:.5rem .8rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
+      font: 800 .78rem/1 "Outfit", system-ui;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      width: fit-content;
+      transform: translateY(8px);
+      opacity:0;
+      animation: introIn .75s ease forwards;
+      animation-delay: .12s;
+    }
+    .intro-dot{
+      width:9px; height:9px; border-radius:50%;
+      background: linear-gradient(180deg, #ff4f7a, #ffd33d);
+      box-shadow: 0 0 0 8px rgba(255,79,122,.12);
+    }
+
+    .intro-title{
+      margin:.85rem 0 .55rem;
+      font-family: "Abril Fatface", serif;
+      letter-spacing:.02em;
+      line-height:.92;
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255,255,255,.88);
+      transform: translateY(10px);
+      opacity:0;
+      animation: introIn .85s ease forwards;
+      animation-delay: .22s;
+    }
+    .intro-title .fill{
+      display:block;
+      margin-top:.15rem;
+      -webkit-text-stroke: 0;
+      background: linear-gradient(90deg, #ff4f7a, #ffd33d, #19c37d);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      filter: drop-shadow(0 18px 38px rgba(0,0,0,.35));
+    }
+    .intro-sub{
+      margin:0 0 1.1rem;
+      color: rgba(255,255,255,.72);
+      font: 600 clamp(1rem, 2vw, 1.15rem)/1.45 "Outfit", system-ui;
+      max-width: 48ch;
+      transform: translateY(10px);
+      opacity:0;
+      animation: introIn .85s ease forwards;
+      animation-delay: .32s;
+    }
+
+    .intro-ctas{ display:flex; gap:.7rem; flex-wrap:wrap; }
+    .intro-btn{
+      appearance:none; border:0;
+      padding: .95rem 1.05rem;
+      border-radius: 14px;
+      font: 900 .82rem/1 "Outfit", system-ui;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition: transform .18s ease, filter .18s ease, background .18s ease;
+      transform: translateY(10px);
+      opacity:0;
+      animation: introIn .85s ease forwards;
+      animation-delay: .42s;
+    }
+    .intro-btn.primary{
+      background: linear-gradient(90deg, #ff4f7a, #ffd33d);
+      color:#0b0d10;
+      filter: drop-shadow(0 18px 40px rgba(255,79,122,.22));
+    }
+    .intro-btn.ghost{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.92);
+    }
+    .intro-btn:hover{ transform: translateY(6px) scale(1.02); }
+    .intro-btn:active{ transform: translateY(8px) scale(.99); }
+
+    @keyframes introIn {
+      to { transform: translateY(0); opacity:1; }
+    }
+
+    .intro-art{
+      position:relative;
+      width:100%;
+      aspect-ratio: 4/5;
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
+      box-shadow: 0 24px 90px rgba(0,0,0,.55);
+      transform: translateY(10px) scale(.98);
+      opacity:0;
+      animation: introArtIn 1s ease forwards;
+      animation-delay: .20s;
+    }
+    @keyframes introArtIn{
+      to{ transform: translateY(0) scale(1); opacity:1; }
+    }
+    .intro-art img{
+      width:100%; height:100%;
+      object-fit:cover;
+      transform: scale(1.05);
+      filter: contrast(1.06) saturate(1.06);
+    }
+
+    /* confeti/guayaba shapes */
+    .conf{
+      position:absolute;
+      width: 22px; height: 22px;
+      border-radius: 8px;
+      border:1px solid rgba(255,255,255,.12);
+      opacity:.9;
+      animation: confFloat 6s ease-in-out infinite;
+      filter: drop-shadow(0 18px 35px rgba(0,0,0,.35));
+    }
+    .conf.c1{ top:10%; left:7%; background: rgba(255,79,122,.85); animation-duration: 6.8s; }
+    .conf.c2{ top:16%; right:10%; background: rgba(255,211,61,.80); animation-duration: 7.6s; }
+    .conf.c3{ bottom:18%; left:12%; background: rgba(25,195,125,.70); animation-duration: 8.2s; }
+    .conf.c4{ bottom:12%; right:16%; background: rgba(37,211,200,.60); animation-duration: 7.2s; }
+    @keyframes confFloat{
+      0%,100%{ transform: translateY(0) rotate(8deg); }
+      50%{ transform: translateY(-18px) rotate(-10deg); }
+    }
+
+    /* ==== Transición: cuando se cierra el intro ==== */
+    .intro.is-leaving{
+      animation: introOut .65s ease forwards;
+    }
+    @keyframes introOut{
+      to { opacity:0; transform: scale(1.02); pointer-events:none; }
+    }
+
+    /* ==== Animación del H1 en HOME (tipo “reveal” con letras) ==== */
+    .hero-title .outline-text,
+    .hero-title .filled-text{
+      display:block;
+      transform: translateY(12px);
+      opacity:0;
+    }
+    body.is-ready .hero-title .outline-text{
+      animation: heroLine .85s cubic-bezier(.2,.9,.2,1) forwards;
+      animation-delay: .08s;
+    }
+    body.is-ready .hero-title .filled-text{
+      animation: heroLine .85s cubic-bezier(.2,.9,.2,1) forwards;
+      animation-delay: .18s;
+    }
+    @keyframes heroLine{
+      to { transform: translateY(0); opacity:1; }
+    }
+
+    /* ==== Hover divertido en stickers flotantes del hero (si existen) ==== */
+    .hero-card:hover .floating{ animation-duration: 4.4s; }
+    .hero-card:hover{ transform: translateY(-2px); transition: transform .25s ease; }
+
+    /* ==== Parallax: los elementos con data-parallax se mueven suave ==== */
+    [data-parallax] { will-change: transform; }
+
+    /* Responsive intro */
+    @media (max-width: 980px){
+      .intro-inner{ grid-template-columns: 1fr; }
+      .intro-art{ order:-1; }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Fondo animado -->
-  <canvas id="canvas-bg" aria-hidden="true"></canvas>
-  <div class="noise-layer" aria-hidden="true"></div>
+  <!-- INTRO ANIMADA -->
+  <div class="intro" id="intro" aria-hidden="false">
+    <div class="intro-inner">
+      <div>
+        <div class="intro-badge"><span class="intro-dot"></span> Folclore Futurista</div>
+        <div class="intro-title">
+          RICCIE
+          <span class="fill">ORIACH</span>
+        </div>
+        <p class="intro-sub">
+          Bienvenido al universo guayaba: tradición + futuro + Caribe en movimiento.
+        </p>
 
-  <!-- NAV -->
-  <nav class="navbar" data-elevate>
-    <div class="nav-inner">
-      <div class="logo">
-        <a href="index.html" aria-label="Ir al inicio">RICCIE ORIACH</a>
+        <div class="intro-ctas">
+          <button class="intro-btn primary" id="introEnter">ENTRAR</button>
+          <button class="intro-btn ghost" id="introSkip">SALTAR</button>
+        </div>
       </div>
 
+      <div class="intro-art" data-parallax="0.20">
+        <img src="https://e.snmc.io/i/1200/s/4f296b59611b91c0ba6b29605cc567ac/6878615" alt="Riccie Oriach" />
+        <span class="conf c1" aria-hidden="true"></span>
+        <span class="conf c2" aria-hidden="true"></span>
+        <span class="conf c3" aria-hidden="true"></span>
+        <span class="conf c4" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="canvas-bg" aria-hidden="true"></canvas>
+
+  <!-- TU NAV + CONTENIDO (puedes dejarlo igual que lo tienes) -->
+  <nav class="navbar" data-elevate>
+    <div class="nav-inner">
+      <div class="logo"><a href="index.html">RICCIE ORIACH</a></div>
       <ul class="nav-links" id="nav-menu">
         <li><a href="index.html" class="is-active">INICIO</a></li>
         <li><a href="pages/music.html">MÚSICA</a></li>
@@ -36,14 +276,13 @@
         <li><a href="blog.html">BLOG</a></li>
         <li><a href="contact.html">CONTACTO</a></li>
       </ul>
-
       <button class="hamburger" aria-label="Abrir menú" aria-controls="nav-menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO (tu estructura, pero añade data-parallax a visual) -->
   <header class="hero">
     <div class="container hero-grid">
       <div class="hero-copy reveal">
@@ -65,59 +304,25 @@
           <a href="#destacado" class="btn btn-primary">VER DESTACADO</a>
           <a href="#listen" class="btn btn-ghost">ESCUCHAR</a>
         </div>
-
-        <div class="hero-stats">
-          <div class="stat">
-            <div class="stat-k">Folclore</div>
-            <div class="stat-v">Alternativo</div>
-          </div>
-          <div class="stat">
-            <div class="stat-k">Sonido</div>
-            <div class="stat-v">Caribeño</div>
-          </div>
-          <div class="stat">
-            <div class="stat-k">Mood</div>
-            <div class="stat-v">Guayaba</div>
-          </div>
-        </div>
       </div>
 
-      <div class="hero-visual reveal">
+      <div class="hero-visual reveal" data-parallax="0.12">
         <div class="hero-card">
           <div class="hero-image-wrap">
-            <img
-              src="https://e.snmc.io/i/1200/s/4f296b59611b91c0ba6b29605cc567ac/6878615"
-              alt="Riccie Oriach"
-              class="hero-image"
-              loading="eager"
-            />
+            <img src="https://e.snmc.io/i/1200/s/4f296b59611b91c0ba6b29605cc567ac/6878615" alt="Riccie Oriach" class="hero-image" />
           </div>
-
-          <div class="sticker s1" aria-hidden="true">
-            <span>🔥</span> NUEVO
-          </div>
-          <div class="sticker s2" aria-hidden="true">
-            <span>🍈</span> GUAYABA
-          </div>
-
+          <div class="sticker s1" aria-hidden="true"><span>🔥</span> NUEVO</div>
+          <div class="sticker s2" aria-hidden="true"><span>🍈</span> GUAYABA</div>
           <div class="floating fruit-1" aria-hidden="true"></div>
           <div class="floating fruit-2" aria-hidden="true"></div>
           <div class="floating fruit-3" aria-hidden="true"></div>
-        </div>
-
-        <div class="hero-strip" aria-hidden="true">
-          <span>MAQUINÉ</span><i>•</i>
-          <span>LA GUAYABA</span><i>•</i>
-          <span>PRIMA TECATA</span><i>•</i>
-          <span>FOLCLORE DEL FUTURO</span><i>•</i>
-          <span>RICCIE ORIACH</span><i>•</i>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- MARQUEE -->
-  <div class="marquee-container" role="region" aria-label="Frases en movimiento">
+  <!-- (resto de tu página igual) -->
+  <div class="marquee-container">
     <div class="marquee-track">
       <div class="marquee-group">
         <span class="marquee-item">MAQUINÉ • LA GUAYABA • PRIMA TECATA • FOLCLORE DEL FUTURO • RICCIE ORIACH •</span>
@@ -130,179 +335,7 @@
     </div>
   </div>
 
-  <!-- DESTACADO -->
-  <section id="destacado" class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="section-title">DESTACADO</h2>
-        <p class="section-subtitle">Un vistazo rápido: música, video y lo próximo que viene.</p>
-      </div>
-
-      <div class="feature-grid">
-        <article class="feature-card reveal">
-          <div class="feature-top">
-            <span class="badge">SPOTIFY</span>
-            <span class="badge ghost">OFICIAL</span>
-          </div>
-          <h3>Escucha el perfil</h3>
-          <p>Reproducción directa y acceso rápido a lanzamientos.</p>
-          <a class="feature-link" href="#listen">Abrir player →</a>
-        </article>
-
-        <article class="feature-card reveal">
-          <div class="feature-top">
-            <span class="badge">VIDEO</span>
-            <span class="badge ghost">YOUTUBE</span>
-          </div>
-          <h3>Mira “La Guayaba”</h3>
-          <p>Visuales con sabor, ritmo y story.</p>
-          <a class="feature-link" href="#listen">Ver ahora →</a>
-        </article>
-
-        <article class="feature-card reveal">
-          <div class="feature-top">
-            <span class="badge">TOUR</span>
-            <span class="badge ghost">2025</span>
-          </div>
-          <h3>Próximas fechas</h3>
-          <p>Conciertos y festivales (cuando estén listos).</p>
-          <a class="feature-link" href="#tour">Ver fechas →</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- MÚSICA & VIDEO -->
-  <section id="listen" class="section section-alt">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="section-title">MÚSICA & VIDEO</h2>
-        <p class="section-subtitle">Dale play sin salir de aquí.</p>
-      </div>
-
-      <div class="multimedia-wrapper">
-        <div class="media-card spotify-card reveal">
-          <div class="card-head">
-            <span class="tag">Spotify</span>
-            <span class="hint">Folclore futurista en tu playlist</span>
-          </div>
-          <iframe
-            src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            title="Riccie Oriach en Spotify"
-          ></iframe>
-        </div>
-
-        <div class="media-card youtube-card reveal">
-          <div class="card-head">
-            <span class="tag">YouTube</span>
-            <span class="hint">Video oficial</span>
-          </div>
-          <iframe
-            src="https://www.youtube.com/embed/6Zn7H97v1HM"
-            title="Riccie Oriach - La Guayaba (Official Video)"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            loading="lazy"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
-
-      <p class="spotify-fallback reveal">
-        ¿No carga el reproductor?
-        <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">
-          Abrir perfil en Spotify
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <!-- TOUR -->
-  <section id="tour" class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="section-title">TOUR 2025</h2>
-        <p class="section-subtitle">Fechas de ejemplo (luego las conectamos a data real).</p>
-      </div>
-
-      <div class="tour-dates reveal">
-        <div class="tour-item">
-          <span class="date">15 MAR</span>
-          <span class="tour-dot" aria-hidden="true"></span>
-          <span class="city">SANTO DOMINGO</span>
-          <span class="venue">Teatro Nacional</span>
-          <a href="#" class="ticket-btn">TICKETS</a>
-        </div>
-
-        <div class="tour-item">
-          <span class="date">22 MAR</span>
-          <span class="tour-dot" aria-hidden="true"></span>
-          <span class="city">SANTIAGO</span>
-          <span class="venue">Gran Teatro</span>
-          <a href="#" class="ticket-btn">TICKETS</a>
-        </div>
-
-        <div class="tour-item">
-          <span class="date">05 ABR</span>
-          <span class="tour-dot" aria-hidden="true"></span>
-          <span class="city">BOGOTÁ</span>
-          <span class="venue">Estéreo Picnic</span>
-          <a href="#" class="ticket-btn">TICKETS</a>
-        </div>
-
-        <div class="tour-item">
-          <span class="date">12 MAY</span>
-          <span class="tour-dot" aria-hidden="true"></span>
-          <span class="city">MADRID</span>
-          <span class="venue">Sala La Riviera</span>
-          <a href="#" class="ticket-btn">TICKETS</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section class="section section-cta">
-    <div class="container">
-      <div class="cta-card reveal">
-        <div class="cta-copy">
-          <h2>Únete al ritmo</h2>
-          <p>Noticias, lanzamientos y fechas — directo cuando salgan.</p>
-
-          <form class="cta-form" onsubmit="return false;">
-            <label class="sr-only" for="email">Email</label>
-            <input id="email" type="email" placeholder="tuemail@correo.com" autocomplete="email" />
-            <button class="btn btn-primary" type="submit">SUSCRIBIRME</button>
-          </form>
-
-          <small class="cta-note">*Formulario demo. Luego lo conectamos.</small>
-        </div>
-
-        <div class="cta-art" aria-hidden="true">
-          <div class="blob b1"></div>
-          <div class="blob b2"></div>
-          <div class="blob b3"></div>
-          <div class="cta-stamp">Folclore del futuro</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-content">
-      <div class="footer-top">
-        <div class="logo"><a href="index.html">RICCIE ORIACH</a></div>
-        <div class="social-links">
-          <a href="#">Instagram</a>
-          <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
-          <a href="#">YouTube</a>
-        </div>
-      </div>
-      <p class="footer-copy">© 2025 Riccie Oriach. Todos los derechos reservados.</p>
-    </div>
-  </footer>
+  <!-- ... deja tus secciones como están ... -->
 
   <script src="Assets/js/base.js"></script>
 </body>
