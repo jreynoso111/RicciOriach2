@@ -1,98 +1,3 @@
-/* --- VARIABLES & ESTILOS GLOBALES --- */
-:root {
-    --color-bg: #300505;       /* Rojo Vino Profundo */
-    --color-text: #F4F4F4;     /* Blanco Hueso */
-    --color-accent: #FF5E6C;   /* Rosa Guayaba */
-    --color-secondary: #FFD700; /* Amarillo Sol */
-    --color-outline: rgba(255, 94, 108, 0.7); /* Contraste para Outline */
-
-    /* Ajustes del fondo */
-    --texture-offset-y: 15%;
-    --texture-opacity: 0.48;
-    --overlay-strong: rgba(58, 10, 10, 0.55);
-    --overlay-soft: rgba(24, 3, 3, 0.42);
-    --overlay-sheen: rgba(255, 94, 108, 0.04);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-padding-top: 100px; }
-
-body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    font-family: 'Outfit', sans-serif;
-    overflow-x: hidden;
-    margin: 0;
-    position: relative;
-}
-
-/* Capas de Fondo */
-body::before {
-    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('../images/texture.png'); background-size: cover;
-    background-position: center var(--texture-offset-y); background-repeat: no-repeat;
-    opacity: var(--texture-opacity); z-index: -3; pointer-events: none;
-}
-
-body::after {
-    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at 50% 50%, var(--overlay-strong) 0%, var(--overlay-soft) 100%),
-                linear-gradient(45deg, var(--overlay-sheen), transparent);
-    z-index: -2; pointer-events: none;
-}
-
-#canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-
-/* --- NAVBAR --- */
-.navbar {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem 2rem; position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
-    background: transparent;
-    transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease;
-}
-
-.navbar.scrolled {
-    background: linear-gradient(to bottom, rgba(48, 5, 5, 0.85), rgba(48, 5, 5, 0.55));
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-}
-
-/* ✅ CAMBIO: logo un poco más a la derecha */
-.logo { margin-left: 14px; }
-
-.logo a {
-    font-family: 'Abril Fatface', cursive; font-size: 1.5rem; color: var(--color-secondary);
-    letter-spacing: 1px; text-decoration: none; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-}
-
-.nav-links { list-style: none; display: flex; gap: 2rem; }
-.nav-links li a {
-    text-decoration: none; color: var(--color-text); font-weight: 500;
-    text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s ease;
-    position: relative;
-}
-.nav-links li a::after {
-    content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
-    background-color: var(--color-accent); transition: width 0.3s;
-}
-.nav-links li a:hover::after { width: 100%; }
-.nav-links li a:hover { color: var(--color-accent); text-shadow: 0 0 5px var(--color-accent); }
-
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-.hamburger span { width: 25px; height: 3px; background-color: white; transition: transform 0.3s; }
-
-.nav-links li a:focus-visible,
-.cta-button:focus-visible,
-.ticket-btn:focus-visible,
-.social-links a:focus-visible,
-.hamburger:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 4px;
-    box-shadow: 0 0 12px rgba(255, 94, 108, 0.4);
-}
-
 /* --- HERO SECTION --- */
 .hero {
     min-height: 90vh;
@@ -180,12 +85,6 @@ body::after {
 #listen {
     padding: 4rem 5%;
     text-align: center;
-}
-
-.section-title {
-    font-family: 'Abril Fatface', cursive; font-size: 3rem; margin-bottom: 1rem;
-    color: var(--color-text); text-align: center;
-    text-shadow: 0 0 15px rgba(255, 94, 108, 0.3);
 }
 
 /* Contenedor flexible para poner Spotify y Youtube lado a lado */
@@ -285,19 +184,6 @@ body::after {
 }
 .ticket-btn:hover { background: var(--color-accent); color: white; box-shadow: 0 0 20px rgba(255, 94, 108, 0.5); }
 
-/* --- FOOTER --- */
-footer {
-    text-align: center; padding: 4rem 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: auto; background: linear-gradient(to top, rgba(20, 3, 3, 0.8), transparent);
-}
-.social-links { margin-bottom: 2rem; }
-.social-links a {
-    color: var(--color-text); margin: 0 20px; text-decoration: none; font-weight: 700;
-    text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s; letter-spacing: 1px;
-}
-.social-links a:hover { color: var(--color-secondary); text-shadow: 0 0 10px var(--color-secondary); }
-footer p { opacity: 0.6; font-size: 0.9rem; }
-
 /* --- RESPONSIVE --- */
 @media (max-width: 968px) {
      .hero { flex-direction: column-reverse; text-align: center; padding-top: 120px; gap: 3rem; }
@@ -307,20 +193,6 @@ footer p { opacity: 0.6; font-size: 0.9rem; }
 }
 
 @media (max-width: 768px) {
-    .navbar { padding: 1rem; }
-
-    /* en móvil, no empujamos el logo extra para evitar cortes */
-    .logo { margin-left: 0; }
-
-    .nav-links {
-        display: none; flex-direction: column; position: absolute; top: 70px; right: 20px;
-        background-color: rgba(48, 5, 5, 0.95); padding: 2rem; border: 1px solid var(--color-accent);
-        border-radius: 15px; z-index: 1000; backdrop-filter: blur(10px);
-        opacity: 0; transform: translateY(-20px); transition: all 0.3s ease;
-    }
-    .nav-links.active { display: flex; opacity: 1; transform: translateY(0); }
-    .hamburger { display: flex; }
-
     .hero-subtitle { font-size: 1rem; }
     .marquee-item { font-size: 1.2rem; padding: 0 1rem; }
 
