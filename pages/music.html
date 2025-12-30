@@ -52,6 +52,28 @@
       </div>
     </section>
 
+    <!-- DESTACADO -->
+    <section class="section featured-section" id="featured">
+      <div class="featured-card">
+        <div class="featured-cover">
+          <img src="../Assets/images/cover-la-guayaba.jpg" alt="Riccie Oriach - La Guayaba cover" loading="lazy" />
+        </div>
+
+        <div class="featured-meta">
+          <span class="featured-tag"><span class="pill-dot"></span> Lanzamiento destacado</span>
+          <div>
+            <div class="featured-title">La Guayaba</div>
+            <div class="featured-year">2025 · Single</div>
+          </div>
+          <div class="featured-actions">
+            <a class="btn btn-primary" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Escuchar en Spotify</a>
+            <a class="btn btn-ghost" href="https://www.youtube.com/watch?v=6Zn7H97v1HM" target="_blank" rel="noopener noreferrer">Ver en YouTube</a>
+            <a class="btn btn-ghost" href="#escuchar">Abrir playlist</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ESCUCHAR Y VER -->
     <section class="section" id="escuchar">
       <h2 class="section-title">Escuchar y ver</h2>
@@ -60,23 +82,36 @@
       </p>
 
       <div class="multimedia-wrapper">
-        <div class="media-card spotify-card">
-          <iframe
-            src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            title="Riccie Oriach en Spotify"
-          ></iframe>
+        <!-- Spotify: click-to-load -->
+        <div class="embed" data-embed-kind="spotify" data-embed-src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0" data-open-url="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV">
+          <div class="embed-shell">
+            <div class="embed-cover">
+              <img src="../Assets/images/cover-la-guayaba.jpg" alt="Riccie Oriach - La Guayaba cover preview" loading="lazy" />
+            </div>
+            <div class="embed-overlay">
+              <div class="embed-play">▶</div>
+              <div class="embed-copy">Reproducir aquí</div>
+              <div class="embed-meta">Spotify • Perfil oficial</div>
+              <button class="embed-load" type="button">Reproducir aquí</button>
+              <a class="embed-open" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir en Spotify ↗</a>
+            </div>
+          </div>
         </div>
 
-        <div class="media-card youtube-card">
-          <iframe
-            src="https://www.youtube.com/embed/6Zn7H97v1HM"
-            title="Riccie Oriach - La Guayaba (Official Video)"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            loading="lazy"
-            allowfullscreen
-          ></iframe>
+        <!-- YouTube: click-to-load -->
+        <div class="embed" data-embed-kind="youtube" data-embed-src="https://www.youtube-nocookie.com/embed/6Zn7H97v1HM" data-open-url="https://www.youtube.com/watch?v=6Zn7H97v1HM">
+          <div class="embed-shell">
+            <div class="embed-cover">
+              <img src="../Assets/images/cover-la-guayaba.jpg" alt="Riccie Oriach - La Guayaba video preview" loading="lazy" />
+            </div>
+            <div class="embed-overlay">
+              <div class="embed-play">▶</div>
+              <div class="embed-copy">Reproducir aquí</div>
+              <div class="embed-meta">YouTube • La Guayaba</div>
+              <button class="embed-load" type="button">Reproducir aquí</button>
+              <a class="embed-open" href="https://www.youtube.com/watch?v=6Zn7H97v1HM" target="_blank" rel="noopener noreferrer">Abrir en YouTube ↗</a>
+            </div>
+          </div>
         </div>
       </div>
 
