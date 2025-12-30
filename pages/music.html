@@ -33,100 +33,22 @@
   </nav>
 
   <main class="container">
-    <!-- HERO -->
-    <section class="hero">
-      <div>
-        <span class="pill"><span class="pill-dot"></span> Música oficial</span>
-
-        <h1>
-          <span class="outline-text">MÚSICA</span><br />
-          <span class="filled-text">RICCIE ORIACH</span>
-        </h1>
-
-        <p>
-          Folclore Futurista con raíz caribeña. Aquí tienes lanzamientos, playlist y videos con una estética limpia, densa y bailable.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn btn-ghost" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
-          <a class="btn btn-ghost" href="https://www.youtube.com/watch?v=6Zn7H97v1HM" target="_blank" rel="noopener noreferrer">YouTube</a>
-        </div>
-      </div>
-
-      <!-- Visual con imagen sample de internet -->
-      <div class="hero-visual">
-        <div class="hero-visual-inner">
-          <div class="hero-cover">
-            <span class="cover-tag">Destacado</span>
-            <!-- Sample image (internet). Reemplaza por tu cover real cuando quieras. -->
-            <img
-              src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1400&q=80"
-              alt="Cover sample"
-              loading="lazy"
-            />
-          </div>
-
-          <div class="hero-stats">
-            <div class="stat">
-              <div class="k">Ambiente</div>
-              <div class="v">Caribe Futurista</div>
-            </div>
-            <div class="stat">
-              <div class="k">Sensación</div>
-              <div class="v">Denso & Bailable</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SOBRE LA MÚSICA -->
-    <section class="section">
-      <h2 class="section-title">Sobre la música</h2>
-      <p class="section-subtitle">
-        Esta página existe para entender el universo sonoro de Riccie: de dónde viene, qué mezcla y qué te deja después de escucharlo.
-      </p>
-
-      <div class="prose-grid">
-        <div class="prose-card">
-          <h3>Folclore futurista</h3>
-          <div class="prose">
-            <p>
-              La música de Riccie Oriach se mueve entre lo ancestral y lo que todavía no tiene nombre. Parte del Caribe —su ritmo, su calle, su calor—
-              y lo empuja hacia un presente eléctrico: percusiones orgánicas, texturas digitales, coros que parecen ritual y melodías que se quedan como estribillos de madrugada.
-            </p>
-            <p>
-              Aquí no se trata de “fusionar por fusionar”. Se trata de respetar la raíz, y al mismo tiempo deformarla con intención: cambiar el ángulo, acelerar el pulso,
-              abrir espacio para el silencio y volver a entrar con brillo. El resultado es denso, bailable y emocional; música que puede sonar íntima en audífonos,
-              y también enorme en un escenario.
-            </p>
-
-            <div class="quote">
-              “Tradición en una mano, futuro en la otra: lo caribeño como ciencia ficción cotidiana.”
-              <span class="by">— Nota de la casa</span>
-            </div>
-          </div>
+    <!-- DESTACADO -->
+    <section class="section featured-section" id="featured">
+      <div class="featured-card">
+        <div class="featured-cover">
+          <img src="../Assets/images/cover-la-guayaba.jpg" alt="Riccie Oriach - La Guayaba cover" loading="lazy" />
         </div>
 
-        <div class="prose-card">
-          <h3>Claves para escuchar</h3>
-          <div class="keylines">
-            <div class="keyline">
-              <div class="t">Ritmo</div>
-              <div class="d">Percusión y groove como centro: primero el cuerpo, luego la mente.</div>
-            </div>
-            <div class="keyline">
-              <div class="t">Textura</div>
-              <div class="d">Capas: orgánico + digital, brillo + tierra, golpes secos + aire.</div>
-            </div>
-            <div class="keyline">
-              <div class="t">Letra</div>
-              <div class="d">Imágenes y símbolos: lo cotidiano se vuelve mito sin ponerse solemne.</div>
-            </div>
-            <div class="keyline">
-              <div class="t">Energía</div>
-              <div class="d">Del trance a la celebración: canciones que suben sin pedir permiso.</div>
-            </div>
+        <div class="featured-meta">
+          <div>
+            <div class="featured-title">La Guayaba</div>
+            <div class="featured-year">2025 · Single</div>
+          </div>
+          <div class="featured-actions">
+            <a class="btn btn-primary" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Escuchar en Spotify</a>
+            <a class="btn btn-ghost" href="https://www.youtube.com/watch?v=6Zn7H97v1HM" target="_blank" rel="noopener noreferrer">Ver en YouTube</a>
+            <a class="btn btn-ghost" href="#escuchar">Abrir playlist</a>
           </div>
         </div>
       </div>
@@ -139,26 +61,34 @@
         Reproductores integrados para escuchar en Spotify y ver en YouTube. Si tu navegador bloquea iframes, puedes abrirlos en una pestaña nueva.
       </p>
 
-      <div class="media-wrap">
-        <!-- Spotify: se carga al hacer click para evitar bloqueos de privacidad/terceros -->
+      <div class="multimedia-wrapper">
+        <!-- Spotify: click-to-load -->
         <div class="embed" data-embed-kind="spotify" data-embed-src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0" data-open-url="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV">
           <div class="embed-shell">
-            <div class="embed-inner">
-              <div class="embed-title">Spotify</div>
-              <div class="embed-desc">Cargar reproductor aquí mismo.</div>
-              <button class="embed-load" type="button">Cargar Spotify</button>
+            <div class="embed-cover">
+              <img src="../Assets/images/cover-la-guayaba.jpg" alt="Riccie Oriach - La Guayaba cover preview" loading="lazy" />
+            </div>
+            <div class="embed-overlay">
+              <div class="embed-play">▶</div>
+              <div class="embed-copy">Reproducir aquí</div>
+              <div class="embed-meta">Spotify • Perfil oficial</div>
+              <button class="embed-load" type="button">Reproducir aquí</button>
               <a class="embed-open" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir en Spotify ↗</a>
             </div>
           </div>
         </div>
 
-        <!-- YouTube: usamos dominio nocookie y carga bajo interacción -->
+        <!-- YouTube: click-to-load -->
         <div class="embed" data-embed-kind="youtube" data-embed-src="https://www.youtube-nocookie.com/embed/6Zn7H97v1HM" data-open-url="https://www.youtube.com/watch?v=6Zn7H97v1HM">
           <div class="embed-shell">
-            <div class="embed-inner">
-              <div class="embed-title">YouTube</div>
-              <div class="embed-desc">Cargar video aquí mismo.</div>
-              <button class="embed-load" type="button">Cargar YouTube</button>
+            <div class="embed-cover">
+              <img src="../Assets/images/cover-la-guayaba.jpg" alt="Riccie Oriach - La Guayaba video preview" loading="lazy" />
+            </div>
+            <div class="embed-overlay">
+              <div class="embed-play">▶</div>
+              <div class="embed-copy">Reproducir aquí</div>
+              <div class="embed-meta">YouTube • La Guayaba</div>
+              <button class="embed-load" type="button">Reproducir aquí</button>
               <a class="embed-open" href="https://www.youtube.com/watch?v=6Zn7H97v1HM" target="_blank" rel="noopener noreferrer">Abrir en YouTube ↗</a>
             </div>
           </div>
@@ -220,6 +150,58 @@
             <div class="c3">Álbum</div>
             <div class="c4">
               <a class="chip" href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE LA MÚSICA -->
+    <section class="section">
+      <h2 class="section-title">Sobre la música</h2>
+      <p class="section-subtitle">
+        Esta página existe para entender el universo sonoro de Riccie: de dónde viene, qué mezcla y qué te deja después de escucharlo.
+      </p>
+
+      <div class="prose-grid">
+        <div class="prose-card">
+          <h3>Folclore futurista</h3>
+          <div class="prose">
+            <p>
+              La música de Riccie Oriach se mueve entre lo ancestral y lo que todavía no tiene nombre. Parte del Caribe —su ritmo, su calle, su calor—
+              y lo empuja hacia un presente eléctrico: percusiones orgánicas, texturas digitales, coros que parecen ritual y melodías que se quedan como estribillos de madrugada.
+            </p>
+            <p>
+              Aquí no se trata de “fusionar por fusionar”. Se trata de respetar la raíz, y al mismo tiempo deformarla con intención: cambiar el ángulo, acelerar el pulso,
+              abrir espacio para el silencio y volver a entrar con brillo. El resultado es denso, bailable y emocional; música que puede sonar íntima en audífonos,
+              y también enorme en un escenario.
+            </p>
+
+            <div class="quote">
+              “Tradición en una mano, futuro en la otra: lo caribeño como ciencia ficción cotidiana.”
+              <span class="by">— Nota de la casa</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="prose-card">
+          <h3>Claves para escuchar</h3>
+          <div class="keylines">
+            <div class="keyline">
+              <div class="t">Ritmo</div>
+              <div class="d">Percusión y groove como centro: primero el cuerpo, luego la mente.</div>
+            </div>
+            <div class="keyline">
+              <div class="t">Textura</div>
+              <div class="d">Capas: orgánico + digital, brillo + tierra, golpes secos + aire.</div>
+            </div>
+            <div class="keyline">
+              <div class="t">Letra</div>
+              <div class="d">Imágenes y símbolos: lo cotidiano se vuelve mito sin ponerse solemne.</div>
+            </div>
+            <div class="keyline">
+              <div class="t">Energía</div>
+              <div class="d">Del trance a la celebración: canciones que suben sin pedir permiso.</div>
             </div>
           </div>
         </div>
