@@ -1,0 +1,340 @@
+/* --- VARIABLES & ESTILOS GLOBALES --- */
+:root {
+    --color-bg: #300505;       /* Rojo Vino Profundo */
+    --color-text: #F4F4F4;     /* Blanco Hueso */
+    --color-accent: #FF5E6C;   /* Rosa Guayaba */
+    --color-secondary: #FFD700; /* Amarillo Sol */
+    --color-outline: rgba(255, 94, 108, 0.7); /* Contraste para Outline */
+
+    /* Ajustes del fondo */
+    --texture-offset-y: 15%;
+    --texture-opacity: 0.48;
+    --overlay-strong: rgba(58, 10, 10, 0.55);
+    --overlay-soft: rgba(24, 3, 3, 0.42);
+    --overlay-sheen: rgba(255, 94, 108, 0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    margin: 0;
+    position: relative;
+}
+
+/* Capas de Fondo */
+body::before {
+    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('../images/texture.png'); background-size: cover;
+    background-position: center var(--texture-offset-y); background-repeat: no-repeat;
+    opacity: var(--texture-opacity); z-index: -3; pointer-events: none;
+}
+
+body::after {
+    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 50%, var(--overlay-strong) 0%, var(--overlay-soft) 100%),
+                linear-gradient(45deg, var(--overlay-sheen), transparent);
+    z-index: -2; pointer-events: none;
+}
+
+#canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+/* --- NAVBAR --- */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 2rem; position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    background: transparent;
+    transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease;
+}
+
+.navbar.scrolled {
+    background: linear-gradient(to bottom, rgba(48, 5, 5, 0.85), rgba(48, 5, 5, 0.55));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ✅ CAMBIO: logo un poco más a la derecha */
+.logo { margin-left: 14px; }
+
+.logo a {
+    font-family: 'Abril Fatface', cursive; font-size: 1.5rem; color: var(--color-secondary);
+    letter-spacing: 1px; text-decoration: none; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.nav-links { list-style: none; display: flex; gap: 2rem; }
+.nav-links li a {
+    text-decoration: none; color: var(--color-text); font-weight: 500;
+    text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s ease;
+    position: relative;
+}
+.nav-links li a::after {
+    content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+    background-color: var(--color-accent); transition: width 0.3s;
+}
+.nav-links li a:hover::after { width: 100%; }
+.nav-links li a:hover { color: var(--color-accent); text-shadow: 0 0 5px var(--color-accent); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { width: 25px; height: 3px; background-color: white; transition: transform 0.3s; }
+
+.nav-links li a:focus-visible,
+.cta-button:focus-visible,
+.ticket-btn:focus-visible,
+.social-links a:focus-visible,
+.hamburger:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    box-shadow: 0 0 12px rgba(255, 94, 108, 0.4);
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrado */
+    gap: 5rem;
+    padding: 0 5%;
+    padding-top: 80px;
+    position: relative;
+}
+
+.hero-content { max-width: 600px; z-index: 2; }
+
+.hero-title {
+    font-family: 'Abril Fatface', cursive;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.95;
+    margin-bottom: 1rem; text-transform: uppercase;
+}
+
+.outline-text { -webkit-text-stroke: 2px var(--color-outline); text-stroke: 2px var(--color-outline); color: transparent; }
+.filled-text { color: var(--color-accent); text-shadow: 0 0 20px rgba(255, 94, 108, 0.3); }
+
+.hero-subtitle {
+    font-size: 1.3rem; letter-spacing: 4px; margin-bottom: 2.5rem;
+    color: var(--color-secondary); font-weight: 300;
+}
+
+.cta-button {
+    display: inline-block; padding: 1rem 3rem; background-color: var(--color-accent);
+    color: white; text-decoration: none; border-radius: 50px; font-weight: 700;
+    font-size: 1.1rem; transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 94, 108, 0.3);
+}
+.cta-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 94, 108, 0.6); background-color: #ff7a85;
+}
+
+/* Imagen Héroe */
+.hero-image-container { position: relative; max-width: 500px; display: flex; justify-content: center; }
+.hero-image {
+    width: 100%; border-radius: 30px;
+    filter: contrast(1.1) saturate(1.1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(255, 215, 0, 0.2);
+    transition: transform 0.5s ease;
+}
+.hero-image-container:hover .hero-image { transform: scale(1.02) rotate(1deg); }
+
+.floating-element { position: absolute; border-radius: 50%; opacity: 0.8; animation: float 6s ease-in-out infinite; z-index: -1; }
+.fruit-1 { width: 80px; height: 80px; background: radial-gradient(circle, var(--color-accent), transparent); top: -30px; right: 30px; filter: blur(8px); }
+.fruit-2 { width: 120px; height: 120px; background: radial-gradient(circle, var(--color-secondary), transparent); bottom: 30px; left: -50px; animation-delay: 2s; filter: blur(10px); }
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+
+/* --- MARQUEE --- */
+.marquee-container {
+    color: var(--color-bg);
+    padding: 15px 0;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 4rem;
+    transform: rotate(-1deg);
+    display: flex;
+}
+.marquee-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    background: var(--color-secondary);
+    border-top: 3px solid var(--color-bg);
+    border-bottom: 3px solid var(--color-bg);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    z-index: 0;
+}
+.marquee-track { display: flex; width: max-content; white-space: nowrap; animation: marquee 20s linear infinite; position: relative; z-index: 1; }
+.marquee-group { display: flex; }
+.marquee-item { font-family: 'Abril Fatface', cursive; font-size: 1.5rem; text-transform: uppercase; padding: 0 2rem; line-height: 1; flex-shrink: 0; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* --- SECCIÓN MULTIMEDIA --- */
+#listen {
+    padding: 4rem 5%;
+    text-align: center;
+}
+
+.section-title {
+    font-family: 'Abril Fatface', cursive; font-size: 3rem; margin-bottom: 1rem;
+    color: var(--color-text); text-align: center;
+    text-shadow: 0 0 15px rgba(255, 94, 108, 0.3);
+}
+
+/* Contenedor flexible para poner Spotify y Youtube lado a lado */
+.multimedia-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* ✅ alinear arriba */
+    gap: 2rem;
+    flex-wrap: wrap; /* Para movil */
+    margin-top: 2rem;
+}
+
+/* ✅ tarjetas uniformes */
+.media-card {
+    width: 25vw;
+    min-width: 280px;
+    max-width: 420px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 94, 108, 0.35);
+    background: rgba(48, 5, 5, 0.55);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.media-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.35);
+}
+
+/* Spotify (352px) */
+.spotify-card iframe {
+    width: 100%;
+    height: 352px;
+    border: none;
+    display: block;
+}
+
+/* ✅ YouTube sincronizado a 352px */
+.youtube-card iframe {
+    width: 100%;
+    height: 352px;
+    border: none;
+    display: block;
+}
+
+.spotify-fallback {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    width: 100%;
+}
+
+.spotify-fallback a {
+    color: var(--color-secondary);
+    font-weight: 700;
+}
+
+/* --- TOUR SECTION --- */
+.tour-section {
+    padding: 4rem 2rem; background: rgba(48, 5, 5, 0.5);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    text-align: center; margin: 4rem 5%; border-radius: 30px;
+    border: 1px solid rgba(255, 94, 108, 0.3);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.tour-dates { max-width: 900px; margin: 0 auto; }
+.tour-item {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    align-items: center;
+    column-gap: 1.5rem;
+    padding: 1.5rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+.tour-item:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); }
+.tour-item:last-child { border-bottom: none; }
+
+.date { color: var(--color-secondary); font-weight: 700; font-size: 1.6rem; text-align: left; font-family: 'Abril Fatface', cursive; }
+.tour-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--color-accent), var(--color-secondary));
+    box-shadow: 0 0 10px rgba(255, 94, 108, 0.45);
+}
+.city { font-weight: 700; font-size: 1.3rem; text-align: left; }
+.venue { font-weight: 300; text-align: left; opacity: 0.8; font-size: 1.1rem;}
+
+.ticket-btn {
+    padding: 0.8rem 2rem; border: 2px solid var(--color-accent); color: var(--color-accent);
+    text-decoration: none; border-radius: 30px; font-size: 0.9rem; font-weight: 700;
+    transition: all 0.3s; letter-spacing: 1px;
+}
+.ticket-btn:hover { background: var(--color-accent); color: white; box-shadow: 0 0 20px rgba(255, 94, 108, 0.5); }
+
+/* --- FOOTER --- */
+footer {
+    text-align: center; padding: 4rem 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto; background: linear-gradient(to top, rgba(20, 3, 3, 0.8), transparent);
+}
+.social-links { margin-bottom: 2rem; }
+.social-links a {
+    color: var(--color-text); margin: 0 20px; text-decoration: none; font-weight: 700;
+    text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s; letter-spacing: 1px;
+}
+.social-links a:hover { color: var(--color-secondary); text-shadow: 0 0 10px var(--color-secondary); }
+footer p { opacity: 0.6; font-size: 0.9rem; }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 968px) {
+     .hero { flex-direction: column-reverse; text-align: center; padding-top: 120px; gap: 3rem; }
+     .hero-content { max-width: 100%; }
+     .hero-image-container { max-width: 80%; }
+     .hero-title { line-height: 1.05; }
+}
+
+@media (max-width: 768px) {
+    .navbar { padding: 1rem; }
+
+    /* en móvil, no empujamos el logo extra para evitar cortes */
+    .logo { margin-left: 0; }
+
+    .nav-links {
+        display: none; flex-direction: column; position: absolute; top: 70px; right: 20px;
+        background-color: rgba(48, 5, 5, 0.95); padding: 2rem; border: 1px solid var(--color-accent);
+        border-radius: 15px; z-index: 1000; backdrop-filter: blur(10px);
+        opacity: 0; transform: translateY(-20px); transition: all 0.3s ease;
+    }
+    .nav-links.active { display: flex; opacity: 1; transform: translateY(0); }
+    .hamburger { display: flex; }
+
+    .hero-subtitle { font-size: 1rem; }
+    .marquee-item { font-size: 1.2rem; padding: 0 1rem; }
+
+    .multimedia-wrapper { flex-direction: column; gap: 2rem; }
+    .media-card { width: 80vw; max-width: 520px; min-width: 0; }
+
+    .tour-section { margin: 3rem 1rem; padding: 2rem 1rem; }
+    .tour-item {
+        grid-template-columns: 1fr;
+        row-gap: 10px;
+        text-align: center;
+        padding: 1.5rem 0;
+    }
+    .tour-item:hover { background: transparent; transform: none; }
+    .tour-dot { margin: 0 auto; }
+    .date, .city, .venue { width: 100%; text-align: center; }
+    .date { font-size: 2rem; margin-bottom: 0.5rem; }
+    .ticket-btn { width: 100%; max-width: 200px; margin-top: 1rem;}
+}
