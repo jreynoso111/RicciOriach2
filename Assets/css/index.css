@@ -16,6 +16,8 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { scroll-padding-top: 100px; }
+
 body {
     background-color: var(--color-bg);
     color: var(--color-text);
@@ -270,8 +272,8 @@ body::after {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: radial-gradient(circle, var(--color-accent), var(--color-secondary));
-    box-shadow: 0 0 10px rgba(255, 94, 108, 0.45);
+    background: radial-gradient(circle at 30% 30%, var(--color-accent), var(--color-secondary));
+    box-shadow: 0 0 10px rgba(255, 94, 108, 0.4), 0 0 0 2px rgba(255, 215, 0, 0.25);
 }
 .city { font-weight: 700; font-size: 1.3rem; text-align: left; }
 .venue { font-weight: 300; text-align: left; opacity: 0.8; font-size: 1.1rem;}
@@ -333,7 +335,7 @@ footer p { opacity: 0.6; font-size: 0.9rem; }
         padding: 1.5rem 0;
     }
     .tour-item:hover { background: transparent; transform: none; }
-    .tour-dot { margin: 0 auto; }
+    .tour-dot { display: none; }
     .date, .city, .venue { width: 100%; text-align: center; }
     .date { font-size: 2rem; margin-bottom: 0.5rem; }
     .ticket-btn { width: 100%; max-width: 200px; margin-top: 1rem;}

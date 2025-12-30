@@ -78,17 +78,19 @@
     const navbar = document.querySelector('.navbar');
     const navMenu = document.getElementById('nav-menu');
 
-    const toggleMenu = () => {
-        const isActive = navLinks.classList.toggle('active');
-        hamburger.style.transform = isActive ? 'rotate(90deg)' : 'rotate(0)';
-        hamburger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-    };
-
     const closeMenu = () => {
         if (!navLinks.classList.contains('active')) return;
         navLinks.classList.remove('active');
         hamburger.style.transform = 'rotate(0)';
         hamburger.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-open');
+    };
+
+    const toggleMenu = () => {
+        const isActive = navLinks.classList.toggle('active');
+        hamburger.style.transform = isActive ? 'rotate(90deg)' : 'rotate(0)';
+        hamburger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        document.body.classList.toggle('menu-open', isActive);
     };
 
     hamburger.addEventListener('click', toggleMenu);
@@ -100,9 +102,9 @@
     });
 
     document.addEventListener('click', (event) => {
-        if (navLinks.classList.contains('active') && !navMenu.contains(event.target) && !hamburger.contains(event.target)) {
-            closeMenu();
-        }
+        if (!navLinks.classList.contains('active')) return;
+        const isMenuClick = navMenu.contains(event.target) || hamburger.contains(event.target);
+        if (!isMenuClick) closeMenu();
     });
 
     document.addEventListener('keydown', (event) => {
