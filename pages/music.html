@@ -20,19 +20,26 @@
   <link rel="stylesheet" href="../Assets/css/base.css" />
   <link rel="stylesheet" href="../Assets/css/music.css" />
 
-  <!-- Ajustes SOLO para dar “espacio de página normal” debajo del header, sin tocar base.css -->
+  <!-- Ajustes locales de layout (espaciado normal, no hero) -->
   <style>
     html { scroll-padding-top: 100px; }
 
-    /* “Espacio normal” debajo del header: empuja el contenido hacia abajo */
     main.container {
-      padding-top: 120px; /* aumenta el aire debajo de la navbar */
+      padding-top: 110px; /* espacio normal bajo navbar */
+    }
+
+    /* Reducir espacios entre secciones */
+    .section {
+      padding: 2.6rem 0;
+    }
+
+    .section + .section {
+      padding-top: 2.2rem;
     }
 
     @media (max-width: 768px) {
-      main.container {
-        padding-top: 110px;
-      }
+      main.container { padding-top: 95px; }
+      .section { padding: 2.2rem 0; }
     }
   </style>
 </head>
@@ -60,11 +67,12 @@
   </nav>
 
   <main class="container">
-    <!-- INTRO / TEXTO ARRIBA -->
+
+    <!-- TEXTO / INTRO -->
     <section class="section" id="intro">
       <h1 class="section-title">Música</h1>
       <p class="section-subtitle">
-        Folclore Futurista con raíz caribeña. Aquí tienes lanzamientos, playlist y videos con una estética guayaba, densa y bailable.
+        Folclore Futurista con raíz caribeña. Lanzamientos, playlists y videos para escuchar primero con el cuerpo y luego con la cabeza.
       </p>
 
       <div class="prose-grid">
@@ -73,11 +81,10 @@
           <div class="prose">
             <p>
               La música de Riccie Oriach se mueve entre lo ancestral y lo que todavía no tiene nombre. Parte del Caribe —su ritmo, su calle, su calor—
-              y lo empuja hacia un presente eléctrico: percusiones orgánicas, texturas digitales, coros que parecen ritual y melodías que se quedan como estribillos de madrugada.
+              y lo empuja hacia un presente eléctrico.
             </p>
             <p>
-              Aquí no se trata de “fusionar por fusionar”. Se trata de respetar la raíz, y al mismo tiempo deformarla con intención: cambiar el ángulo, acelerar el pulso,
-              abrir espacio para el silencio y volver a entrar con brillo. El resultado es denso, bailable y emocional; música que puede sonar íntima en audífonos,
+              El resultado es denso, bailable y emocional; música que puede sonar íntima en audífonos,
               y también enorme en un escenario.
             </p>
 
@@ -93,92 +100,29 @@
           <div class="keylines">
             <div class="keyline">
               <div class="t">Ritmo</div>
-              <div class="d">Percusión y groove como centro: primero el cuerpo, luego la mente.</div>
+              <div class="d">El cuerpo manda antes que la mente.</div>
             </div>
             <div class="keyline">
               <div class="t">Textura</div>
-              <div class="d">Capas: orgánico + digital, brillo + tierra, golpes secos + aire.</div>
+              <div class="d">Orgánico + digital, brillo + tierra.</div>
             </div>
             <div class="keyline">
               <div class="t">Letra</div>
-              <div class="d">Imágenes y símbolos: lo cotidiano se vuelve mito sin ponerse solemne.</div>
-            </div>
-            <div class="keyline">
-              <div class="t">Energía</div>
-              <div class="d">Del trance a la celebración: canciones que suben sin pedir permiso.</div>
+              <div class="d">Imágenes que convierten lo cotidiano en mito.</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ESCUCHAR Y VER -->
-    <section class="section" id="escuchar">
-      <h2 class="section-title">Escuchar y ver</h2>
-      <p class="section-subtitle">
-        Reproductores integrados para escuchar en Spotify y ver en YouTube. Si tu navegador bloquea iframes, puedes abrirlos en una pestaña nueva.
-      </p>
-
-      <div class="multimedia-wrapper">
-        <!-- Spotify: click-to-load -->
-        <div class="embed"
-             data-embed-kind="spotify"
-             data-embed-src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0"
-             data-open-url="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV">
-          <div class="embed-shell">
-            <div class="embed-cover">
-              <img src="../Assets/images/cover-la-guayaba.jpg" alt="Riccie Oriach - La Guayaba cover preview" loading="lazy" />
-            </div>
-            <div class="embed-overlay">
-              <div class="embed-play">▶</div>
-              <div class="embed-copy">Reproducir aquí</div>
-              <div class="embed-meta">Spotify • Perfil oficial</div>
-              <button class="embed-load" type="button">Reproducir aquí</button>
-              <a class="embed-open"
-                 href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV"
-                 target="_blank"
-                 rel="noopener noreferrer">Abrir en Spotify ↗</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- YouTube: click-to-load -->
-        <div class="embed"
-             data-embed-kind="youtube"
-             data-embed-src="https://www.youtube-nocookie.com/embed/6Zn7H97v1HM"
-             data-open-url="https://www.youtube.com/watch?v=6Zn7H97v1HM">
-          <div class="embed-shell">
-            <div class="embed-cover">
-              <img src="../Assets/images/cover-la-guayaba.jpg" alt="Riccie Oriach - La Guayaba video preview" loading="lazy" />
-            </div>
-            <div class="embed-overlay">
-              <div class="embed-play">▶</div>
-              <div class="embed-copy">Reproducir aquí</div>
-              <div class="embed-meta">YouTube • La Guayaba</div>
-              <button class="embed-load" type="button">Reproducir aquí</button>
-              <a class="embed-open"
-                 href="https://www.youtube.com/watch?v=6Zn7H97v1HM"
-                 target="_blank"
-                 rel="noopener noreferrer">Abrir en YouTube ↗</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="fallback">
-        ¿Problemas de carga?
-        <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Abrir perfil en Spotify</a>
-      </div>
-    </section>
-
-    <!-- DISCOGRAFÍA (MINIMAL) -->
+    <!-- DISCOGRAFÍA (AHORA ARRIBA) -->
     <section class="section" id="discografia">
       <h2 class="section-title">Discografía</h2>
       <p class="section-subtitle">
-        Selección corta y visual. Cuando tengas enlaces oficiales (Spotify/Apple/Bandcamp), los conectamos aquí.
+        Lanzamientos seleccionados. Escucha y mira directo desde aquí.
       </p>
 
-      <div class="prose-card" style="padding: 0; overflow: hidden;">
+      <div class="prose-card" style="padding:0; overflow:hidden;">
         <div class="discography">
           <div class="discography-row discography-head">
             <div class="c1">Año</div>
@@ -204,7 +148,7 @@
             <div class="c1">2025</div>
             <div class="c2">
               <div class="discography-title">Folclore del Futuro</div>
-              <div class="discography-meta">Proyecto / colección</div>
+              <div class="discography-meta">EP</div>
             </div>
             <div class="c3">EP</div>
             <div class="c4">
@@ -232,12 +176,50 @@
         </div>
       </div>
     </section>
+
+    <!-- ESCUCHAR Y VER (AHORA DEBAJO) -->
+    <section class="section" id="escuchar">
+      <h2 class="section-title">Escuchar y ver</h2>
+      <p class="section-subtitle">
+        Reproductores integrados para escuchar y ver sin salir del sitio.
+      </p>
+
+      <div class="multimedia-wrapper">
+        <!-- Spotify -->
+        <div class="embed"
+             data-embed-kind="spotify"
+             data-embed-src="https://open.spotify.com/embed/artist/3b12EGhDU7EhHcuZmMG3oV?utm_source=generator&theme=0">
+          <div class="embed-shell">
+            <div class="embed-cover">
+              <img src="../Assets/images/cover-la-guayaba.jpg" alt="La Guayaba cover" loading="lazy" />
+            </div>
+            <div class="embed-overlay">
+              <button class="embed-load" type="button">▶ Reproducir en Spotify</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- YouTube -->
+        <div class="embed"
+             data-embed-kind="youtube"
+             data-embed-src="https://www.youtube-nocookie.com/embed/6Zn7H97v1HM">
+          <div class="embed-shell">
+            <div class="embed-cover">
+              <img src="../Assets/images/cover-la-guayaba.jpg" alt="La Guayaba video" loading="lazy" />
+            </div>
+            <div class="embed-overlay">
+              <button class="embed-load" type="button">▶ Ver en YouTube</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer>
-    <div class="logo" style="margin-bottom: 1.2rem;"><a href="../index.html">RICCIE ORIACH</a></div>
+    <div class="logo" style="margin-bottom:1.2rem;"><a href="../index.html">RICCIE ORIACH</a></div>
     <div class="social-links">
-      <!-- Cambia estos href cuando tengas los enlaces reales -->
       <a href="../contact.html">Instagram</a>
       <a href="https://open.spotify.com/artist/3b12EGhDU7EhHcuZmMG3oV" target="_blank" rel="noopener noreferrer">Spotify</a>
       <a href="../contact.html">YouTube</a>
